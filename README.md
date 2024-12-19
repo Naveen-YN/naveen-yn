@@ -11,7 +11,9 @@
 
 ## 📊 GitHub Stats  
 ![Naveen's GitHub Stats](https://github-readme-stats.vercel.app/api?username=Naveen-YN&show_icons=true&theme=radical)  
+
 ![Top Languages](https://github-readme-stats.vercel.app/api/top-langs/?username=Naveen-YN&layout=compact&theme=radical)  
+
 ![GitHub Streak](https://streak-stats.demolab.com?user=Naveen-YN&theme=radical&hide_border=true&date_format=M%20j%5B%2C%20Y%5D)  
 
 ---
