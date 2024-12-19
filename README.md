@@ -1,47 +1,84 @@
 # 👋 Hello, I'm Naveen Yanamadala!
-🚀 **AI/ML Enthusiast | Problem Solver | Tech Explorer**  
-🎓 **B.Tech in Computer Science (AI/ML Specialization)** | CGPA: **8.25**  
-💻 **Python**, **C++**, and **Full-Stack Development**  
 
 ---
 
 ## 🛠️ Tech Stack  
-**Languages:**  
-![Python](https://img.shields.io/badge/-Python-3776AB?style=flat&logo=python&logoColor=white) ![C++](https://img.shields.io/badge/-C++-00599C?style=flat&logo=c%2B%2B&logoColor=white) ![Java](https://img.shields.io/badge/-Java-007396?style=flat&logo=java&logoColor=white)  
-**Frameworks & Tools:**  
-![Django](https://img.shields.io/badge/-Django-092E20?style=flat&logo=django&logoColor=white) ![React](https://img.shields.io/badge/-React-61DAFB?style=flat&logo=react&logoColor=black) ![TensorFlow](https://img.shields.io/badge/-TensorFlow-FF6F00?style=flat&logo=tensorflow&logoColor=white)  
-**Databases & Cloud:**  
-![MySQL](https://img.shields.io/badge/-MySQL-4479A1?style=flat&logo=mysql&logoColor=white) ![AWS](https://img.shields.io/badge/-AWS-FF9900?style=flat&logo=amazon-aws&logoColor=white)  
+
+<div align="center">
+  <img src="https://img.shields.io/badge/-Python-3776AB?style=for-the-badge&logo=python&logoColor=white" />
+  <img src="https://img.shields.io/badge/-C++-00599C?style=for-the-badge&logo=c%2B%2B&logoColor=white" />
+  <img src="https://img.shields.io/badge/-Java-007396?style=for-the-badge&logo=java&logoColor=white" />
+  <img src="https://img.shields.io/badge/-Django-092E20?style=for-the-badge&logo=django&logoColor=white" />
+  <img src="https://img.shields.io/badge/-React-61DAFB?style=for-the-badge&logo=react&logoColor=black" />
+  <img src="https://img.shields.io/badge/-TensorFlow-FF6F00?style=for-the-badge&logo=tensorflow&logoColor=white" />
+  <img src="https://img.shields.io/badge/-AWS-FF9900?style=for-the-badge&logo=amazon-aws&logoColor=white" />
+  <img src="https://img.shields.io/badge/-MySQL-4479A1?style=for-the-badge&logo=mysql&logoColor=white" />
+</div>  
 
 ---
 
 ## 🔬 Featured Projects  
-**[Virtual Healthcare Companion Chatbot](https://github.com/Naveen-YN/Virtual-Healthcare-Companion-Chatbot-Utilizing-NLTK):** AI chatbot with **NLTK**, **Django**, and **AWS** for health guidance.  
-**[Brain Tumor & Lung Disease Detection](https://github.com/Naveen-YN/Brain-Tumor-and-Lung-Disease-Detection-using-Deep-Learning):** Medical diagnostics app using **CNN**, **TensorFlow**, and **PyQt5**.  
-**[Potato Leaf Disease Detection](https://github.com/Naveen-YN/Potato-Leaf-Disease-Identification-using-Deep-Learning):** Crop disease classifier with **ResNet50** and **Keras**.  
+
+<table align="center">
+  <tr>
+    <td align="center">
+      <b>[Virtual Healthcare Chatbot](https://github.com/Naveen-YN/Virtual-Healthcare-Companion-Chatbot-Utilizing-NLTK)</b><br>
+      <i>AI chatbot using NLTK, Django, and AWS for personalized health guidance.</i>
+    </td>
+    <td align="center">
+      <b>[Brain Tumor Detection](https://github.com/Naveen-YN/Brain-Tumor-and-Lung-Disease-Detection-using-Deep-Learning)</b><br>
+      <i>Medical diagnostics app with CNN, TensorFlow, and PyQt5.</i>
+    </td>
+    <td align="center">
+      <b>[Potato Leaf Disease Detection](https://github.com/Naveen-YN/Potato-Leaf-Disease-Identification-using-Deep-Learning)</b><br>
+      <i>Disease classifier for crops using ResNet50 and Keras.</i>
+    </td>
+  </tr>
+</table>
 
 ---
 
 ## 📜 Certifications  
-- **Oracle AI Foundations Associate**  
-- [**Data Analysis with Python** (Coursera)](https://www.coursera.org/account/accomplishments/verify/33HMWDUZ5GM7)  
-- [**Foundational C# with Microsoft** (freeCodeCamp)](https://www.freecodecamp.org/certification/Naveen_Y/foundational-c-sharp-with-microsoft)  
+
+<div align="center">
+  <img src="https://img.shields.io/badge/Oracle%20AI%20Foundations-Associate-FF0000?style=for-the-badge" />
+  <img src="https://img.shields.io/badge/Coursera-Data%20Analysis%20with%20Python-blue?style=for-the-badge" />
+  <img src="https://img.shields.io/badge/freeCodeCamp-C%23%20Foundations-ffcc00?style=for-the-badge" />
+</div>  
 
 ---
 
 ## 📊 GitHub Stats  
-![GitHub Stats](https://github-readme-stats.vercel.app/api?username=Naveen-YN&show_icons=true&theme=radical)  
-![Top Languages](https://github-readme-stats.vercel.app/api/top-langs/?username=Naveen-YN&layout=compact&theme=radical)  
-![GitHub Streak](https://streak-stats.demolab.com?user=Naveen-YN&theme=radical&hide_border=true)  
+
+<div align="center">
+  <img src="https://github-readme-stats.vercel.app/api?username=Naveen-YN&show_icons=true&theme=radical" height="150" />
+  <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=Naveen-YN&layout=compact&theme=radical" height="150" />
+  <img src="https://streak-stats.demolab.com?user=Naveen-YN&theme=radical&hide_border=true" height="150" />
+</div>  
 
 ---
 
-## 🌟 Let's Connect  
-[![Portfolio](https://img.shields.io/badge/-Portfolio-000?style=flat&logo=google-chrome&logoColor=white)](http://naveen.novark.tech/)  
-[![LinkedIn](https://img.shields.io/badge/-LinkedIn-blue?style=flat&logo=LinkedIn&logoColor=white)](https://linkedin.com/in/naveen-yn)  
-[![GitHub](https://img.shields.io/badge/-GitHub-181717?style=flat&logo=github&logoColor=white)](https://github.com/Naveen-YN)  
+## 🏆 Trophies  
+
+<div align="center">
+  <img src="https://github-profile-trophy.vercel.app/?username=Naveen-YN&theme=radical&row=1&column=6" />
+</div>  
 
 ---
-![Visitor Count](https://komarev.com/ghpvc/?username=Naveen-YN&style=flat-square&color=blue)  
-![Trophy](https://github-profile-trophy.vercel.app/?username=Naveen-YN&theme=radical)  
 
+## 🌟 Connect with Me  
+
+<div align="center">
+  <a href="http://naveen.novark.tech/"><img src="https://img.shields.io/badge/-Portfolio-000?style=for-the-badge&logo=google-chrome&logoColor=white" /></a>
+  <a href="https://linkedin.com/in/naveen-yn"><img src="https://img.shields.io/badge/-LinkedIn-blue?style=for-the-badge&logo=LinkedIn&logoColor=white" /></a>
+  <a href="https://github.com/Naveen-YN"><img src="https://img.shields.io/badge/-GitHub-181717?style=for-the-badge&logo=github&logoColor=white" /></a>
+</div>  
+
+---
+
+## 🚀 Fun Widgets  
+
+<div align="center">
+  <img src="https://komarev.com/ghpvc/?username=Naveen-YN&style=for-the-badge&color=blue" />
+  <img src="https://github-profile-trophy.vercel.app/?username=Naveen-YN&theme=flat&column=4" />
+</div>  
