@@ -21,8 +21,9 @@
 <div align="center">
   <img src="https://github-readme-stats.vercel.app/api?username=Naveen-YN&show_icons=true&theme=radical" height="150" />
   <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=Naveen-YN&layout=compact&theme=radical" height="150" />
-  <img src="https://streak-stats.demolab.com?user=Naveen-YN&theme=radical&hide_border=true" height="150" />
+  <img src="https://github-readme-streak-stats.herokuapp.com/?user=Naveen-YN&theme=radical&hide_border=true" height="150" />
 </div>  
+
 
 ---
 
