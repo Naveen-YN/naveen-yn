@@ -1,5 +1,9 @@
 # 👋 Hello, I'm Naveen Yanamadala!
 
+🚀 **AI/ML Enthusiast | Problem Solver | Tech Explorer**  
+🎓 **B.Tech in Computer Science (AI/ML Specialization)** | CGPA: **8.25**  
+💻 Skilled in **Python**, **C++**, **Java**, and **Full-Stack Development**  
+
 ---
 
 ## 🛠️ Tech Stack  
@@ -17,43 +21,20 @@
 
 ---
 
-## 🔬 Featured Projects  
-
-<table align="center">
-  <tr>
-    <td align="center">
-      <b>[Virtual Healthcare Chatbot](https://github.com/Naveen-YN/Virtual-Healthcare-Companion-Chatbot-Utilizing-NLTK)</b><br>
-      <i>AI chatbot using NLTK, Django, and AWS for personalized health guidance.</i>
-    </td>
-    <td align="center">
-      <b>[Brain Tumor Detection](https://github.com/Naveen-YN/Brain-Tumor-and-Lung-Disease-Detection-using-Deep-Learning)</b><br>
-      <i>Medical diagnostics app with CNN, TensorFlow, and PyQt5.</i>
-    </td>
-    <td align="center">
-      <b>[Potato Leaf Disease Detection](https://github.com/Naveen-YN/Potato-Leaf-Disease-Identification-using-Deep-Learning)</b><br>
-      <i>Disease classifier for crops using ResNet50 and Keras.</i>
-    </td>
-  </tr>
-</table>
-
----
-
-## 📜 Certifications  
-
-<div align="center">
-  <img src="https://img.shields.io/badge/Oracle%20AI%20Foundations-Associate-FF0000?style=for-the-badge" />
-  <img src="https://img.shields.io/badge/Coursera-Data%20Analysis%20with%20Python-blue?style=for-the-badge" />
-  <img src="https://img.shields.io/badge/freeCodeCamp-C%23%20Foundations-ffcc00?style=for-the-badge" />
-</div>  
-
----
-
 ## 📊 GitHub Stats  
 
 <div align="center">
   <img src="https://github-readme-stats.vercel.app/api?username=Naveen-YN&show_icons=true&theme=radical" height="150" />
   <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=Naveen-YN&layout=compact&theme=radical" height="150" />
   <img src="https://streak-stats.demolab.com?user=Naveen-YN&theme=radical&hide_border=true" height="150" />
+</div>  
+
+---
+
+## 🔥 Contribution Heatmap  
+
+<div align="center">
+  <img src="https://github-readme-activity-graph.cyclic.app/graph?username=Naveen-YN&theme=radical" alt="GitHub Activity Graph" />
 </div>  
 
 ---
@@ -76,9 +57,8 @@
 
 ---
 
-## 🚀 Fun Widgets  
+## 🚀
 
 <div align="center">
   <img src="https://komarev.com/ghpvc/?username=Naveen-YN&style=for-the-badge&color=blue" />
-  <img src="https://github-profile-trophy.vercel.app/?username=Naveen-YN&theme=flat&column=4" />
 </div>  
