@@ -1,12 +1,7 @@
 # 👋 Hello, I'm Naveen Yanamadala!
-
-🚀 **AI/ML Enthusiast | Problem Solver | Tech Explorer**  
-🎓 **B.Tech in Computer Science (AI/ML Specialization)** | CGPA: **8.25**  
-💻 Skilled in **Python**, **C++**, **Java**, and **Full-Stack Development**  
-
 ---
 
-## 🛠️ Tech Stack  
+## 🛠️ Tech Skills  
 
 <div align="center">
   <img src="https://img.shields.io/badge/-Python-3776AB?style=for-the-badge&logo=python&logoColor=white" />
@@ -42,7 +37,7 @@
 ## 🏆 Trophies  
 
 <div align="center">
-  <img src="https://github-profile-trophy.vercel.app/?username=Naveen-YN&theme=radical&row=1&column=6" />
+  <img src="https://github-profile-trophy.vercel.app/?username=Naveen-YN&theme=dark_dimmed&row=1&column=6" />
 </div>  
 
 ---
@@ -57,7 +52,7 @@
 
 ---
 
-## 🚀
+## 🚀 Fun Widgets  
 
 <div align="center">
   <img src="https://komarev.com/ghpvc/?username=Naveen-YN&style=for-the-badge&color=blue" />
