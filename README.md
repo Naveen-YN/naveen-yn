@@ -1,4 +1,4 @@
-Deployed in [![Netlify Status](https://api.netlify.com/api/v1/badges/9ac3e6d2-ab64-420a-8b8d-eb025856c218/deploy-status)](https://app.netlify.com/projects/naveen-nyn/deploys)
+
 <!--
 **Naveen-YN/naveen-yn** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.
 
@@ -14,3 +14,4 @@ Here are some ideas to get you started:
 - ⚡ Fun fact: ...
 -->
 - 🔭 I’m currently working on my portfolio...
+[![Netlify Status](https://api.netlify.com/api/v1/badges/9ac3e6d2-ab64-420a-8b8d-eb025856c218/deploy-status)](https://app.netlify.com/projects/naveen-nyn/deploys)
