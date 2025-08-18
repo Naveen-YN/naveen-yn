@@ -1,7 +1,7 @@
 [build]
   command = "vite build"
   publish = "dist"
-  functions = ""
+
 [[redirects]]
   from = "/*"
   to = "/index.html"

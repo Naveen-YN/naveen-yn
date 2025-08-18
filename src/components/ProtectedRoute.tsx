@@ -1,15 +1,17 @@
-import React from 'react';
-import { useAdmin } from '../contexts/AdminContext';
-import { Navigate } from 'react-router-dom';
+import React from "react";
+import { Navigate } from "react-router-dom";
 
 interface ProtectedRouteProps {
   children: React.ReactNode;
 }
 
-const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
-  const { isAuthenticated } = useAdmin();
+// ✅ Simple localStorage-based auth check
+const isAuthenticated = () => {
+  return localStorage.getItem("isAuthenticated") === "true";
+};
 
-  if (!isAuthenticated) {
+const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
+  if (!isAuthenticated()) {
     return <Navigate to="/admin/login" replace />;
   }
 

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import { FaUniversity, FaSchool, FaGraduationCap, FaCalendarAlt, FaMapMarkerAlt, FaStar, FaAward, FaBook, FaCertificate, FaUserGraduate, FaMedal, FaTrophy } from "react-icons/fa";
 
@@ -127,7 +127,7 @@ const EducationSection = () => {
     };
   }, []);
 
-  const getEducationIcon = (level) => {
+  const getEducationIcon = (level: string) => {
     switch (level) {
       case 'undergraduate': return FaUniversity;
       case 'postgraduate': return FaUniversity;
@@ -138,7 +138,7 @@ const EducationSection = () => {
     }
   };
 
-  const getEducationColor = (level) => {
+  const getEducationColor = (level: string) => {
     switch (level) {
       case 'undergraduate': return 'from-blue-500/30 to-cyan-500/30 border-blue-500/50 text-blue-400';
       case 'postgraduate': return 'from-indigo-500/30 to-purple-500/30 border-indigo-500/50 text-indigo-400';
@@ -149,7 +149,7 @@ const EducationSection = () => {
     }
   };
 
-  const getStatusColor = (status) => {
+  const getStatusColor = (status: string) => {
     switch (status) {
       case 'current': return 'bg-green-500/20 text-green-400 border-green-500/30';
       case 'completed': return 'bg-blue-500/20 text-blue-400 border-blue-500/30';
@@ -158,7 +158,7 @@ const EducationSection = () => {
     }
   };
 
-  const getStatusText = (status) => {
+  const getStatusText = (status: string) => {
     switch (status) {
       case 'current': return 'Currently Pursuing';
       case 'completed': return 'Completed';
@@ -387,7 +387,7 @@ const EducationSection = () => {
           
           <div className={`grid grid-cols-1 ${sortedHighlights.length === 2 ? 'md:grid-cols-2 max-w-4xl mx-auto' : sortedHighlights.length >= 3 ? 'md:grid-cols-3' : 'md:grid-cols-1 max-w-md mx-auto'} gap-8`}>
             {sortedHighlights.filter(highlight => highlight.isActive).map((highlight, index) => {
-              const IconComponent = iconMap[highlight.icon] || FaAward;
+              const IconComponent = iconMap[highlight.icon as keyof typeof iconMap] || FaAward;
               
               return (
                 <motion.div 

@@ -1,28 +1,32 @@
-import React from 'react';
-import { motion } from 'framer-motion';
-import { Save, LogOut, Clock, CheckCircle, Loader } from 'lucide-react';
-import { useData } from '../contexts/DataContext';
+import React from 'react'
+import { motion } from 'framer-motion'
+import { Save, LogOut, Clock, CheckCircle, Loader } from 'lucide-react'
 
 interface HeaderProps {
-  onSave: () => void;
-  onLogout: () => void;
+  onSave: () => void
+  onLogout: () => void
+  isLoading?: boolean
+  lastSaved?: Date | null
 }
 
-const Header: React.FC<HeaderProps> = ({ onSave, onLogout }) => {
-  const { isLoading, lastSaved } = useData();
-
+const Header: React.FC<HeaderProps> = ({
+  onSave,
+  onLogout,
+  isLoading = false,
+  lastSaved = null,
+}) => {
   const formatLastSaved = (date: Date | null) => {
-    if (!date) return 'Never';
-    const now = new Date();
-    const diff = now.getTime() - date.getTime();
-    const minutes = Math.floor(diff / 60000);
-    const hours = Math.floor(diff / 3600000);
-    
-    if (minutes < 1) return 'Just now';
-    if (minutes < 60) return `${minutes}m ago`;
-    if (hours < 24) return `${hours}h ago`;
-    return date.toLocaleDateString();
-  };
+    if (!date) return 'Never'
+    const now = new Date()
+    const diff = now.getTime() - date.getTime()
+    const minutes = Math.floor(diff / 60000)
+    const hours = Math.floor(diff / 3600000)
+
+    if (minutes < 1) return 'Just now'
+    if (minutes < 60) return `${minutes}m ago`
+    if (hours < 24) return `${hours}h ago`
+    return date.toLocaleDateString()
+  }
 
   return (
     <header className="bg-gradient-to-r from-[#141414] to-black border-b border-gray-700 p-4 sticky top-0 z-50">
@@ -57,7 +61,11 @@ const Header: React.FC<HeaderProps> = ({ onSave, onLogout }) => {
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
-            {isLoading ? <Loader size={18} className="animate-spin" /> : <Save size={18} />}
+            {isLoading ? (
+              <Loader size={18} className="animate-spin" />
+            ) : (
+              <Save size={18} />
+            )}
             {isLoading ? 'Saving...' : 'Save Now'}
           </motion.button>
           <motion.button
@@ -72,7 +80,7 @@ const Header: React.FC<HeaderProps> = ({ onSave, onLogout }) => {
         </div>
       </div>
     </header>
-  );
-};
+  )
+}
 
-export default Header;
+export default Header
