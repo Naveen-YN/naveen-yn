@@ -17,4 +17,10 @@
   <body>
     <div id="root"></div>
   </body>
+  <script>
+  const path = window.location.pathname;
+  if (path !== '/naveen-yn/') {
+    window.location.href = '/naveen-yn/#' + path;
+  }
+</script>
 </html>
