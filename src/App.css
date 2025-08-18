@@ -1,0 +1,136 @@
+/* Custom Scrollbar */
+:root {
+  scroll-behavior: smooth;
+}
+       /* Scrollbar Styling */
+::-webkit-scrollbar {
+        width: 6px; /* Width of the scrollbar */
+    }
+
+    ::-webkit-scrollbar-track {
+        background-color: black; /* Background color of the scrollbar track */
+        border-radius: 0px; /* Rounded corners for the track */
+    }
+
+    ::-webkit-scrollbar-thumb {
+        border-radius: 10px; /* Rounded corners for the thumb */
+        background: linear-gradient(315deg, #045de9 0%, #09c6f9 74%); /* Gradient color */
+    }
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { transform: translateY(50px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 1s ease-in-out;
+}
+
+.animate-slideUp {
+  animation: slideUp 0.8s ease-out;
+}
+@keyframes glow {
+  0% { box-shadow: 0 0 6px rgba(192, 132, 252, 0.5); }
+  50% { box-shadow: 0 0 12px rgba(192, 132, 252, 0.7); }
+  100% { box-shadow: 0 0 6px rgba(192, 132, 252, 0.5); }
+}
+
+.animate-glow {
+  animation: glow 2.5s infinite alternate ease-in-out;
+}
+
+.scroll-indicator {
+  position: absolute;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: white;
+  z-index: 10;
+}
+@keyframes typing {
+  0% {
+    width: 0;
+  }
+  50% {
+    width: 100%;
+  }
+  100% {
+    width: 0;
+  }
+}
+
+@keyframes blink {
+  50% {
+    border-color: transparent;
+  }
+}
+
+.typing-animation {
+  display: inline-block;
+  overflow: hidden;
+  white-space: nowrap;
+  border-right: 3px solid rgba(255, 255, 255, 0.75); /* Cursor effect */
+  animation: typing 10s steps(40) 0.5s infinite, blink 0.75s step-end infinite;
+}
+
+.card {
+  background-color: #141414;
+  border-radius: 12px;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+}
+
+.glass-card {
+  background: rgba(20, 20, 20, 0.7);
+  backdrop-filter: blur(10px);
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.section {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.section.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* 3D Card Flip Animations */
+.perspective-1000 {
+  perspective: 1000px;
+}
+
+.transform-style-preserve-3d {
+  transform-style: preserve-3d;
+}
+
+.backface-hidden {
+  backface-visibility: hidden;
+}
+
+.rotate-y-180 {
+  transform: rotateY(180deg);
+}
+
+/* Utility classes for 3D transforms */
+.rotate-x-5 {
+  transform: rotateX(5deg);
+}
+
+.rotate-y-neg-2 {
+  transform: rotateY(-2deg);
+}
