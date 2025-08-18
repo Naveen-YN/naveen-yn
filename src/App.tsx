@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react"
+import { useEffect, useState, useRef } from "react"
 import { ChevronDown, ArrowUp } from "lucide-react"
 import { Routes, Route } from "react-router-dom"
 
@@ -14,7 +14,8 @@ import CodingProfilesSection from "./components/CodingProfilesSection"
 import ContactSection from "./components/ContactSection"
 import ProjectPage from "./pages/ProjectPage"
 import ResumeRedirect from "./components/ResumeRedirect"
-import { DataProvider } from "./contexts/DataContext"
+// --- IMPORT THE NEW NOTIFICATION COMPONENT ---
+import MaintenanceNotification from "./components/MaintenanceNotification"
 
 import "./App.css"
 import 'slick-carousel/slick/slick.css'
@@ -134,6 +135,7 @@ function App() {
         <Route path="/resume" element={<ResumeRedirect />} />
         <Route path="/project/:slug" element={<ProjectPage />} />
       </Routes>
+            <MaintenanceNotification />
     </>
   )
 }

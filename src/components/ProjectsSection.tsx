@@ -1,7 +1,10 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { FaGithub, FaExternalLinkAlt, FaCalendarAlt, FaUsers, FaCode, FaFilter, FaSearch, FaGraduationCap, FaUser, FaBriefcase, FaHeart, FaLaptopCode, FaTrophy, FaFlask } from 'react-icons/fa';
+import { FaGithub, FaExternalLinkAlt, FaCalendarAlt, FaUsers, FaFilter, FaSearch } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
+
+// Base64-encoded placeholder image (a generic project thumbnail)
+const placeholderImage = 'https://wallpapercave.com/wp/wp3006133.jpg';
 
 interface Project {
   id: string;
@@ -25,11 +28,11 @@ interface Project {
 }
 
 const projects: Project[] = [
-    {
+  {
     id: '1',
     title: 'Portfolio',
-    description: 'My Personal Portfolio Website!',
-    image: 'https://neuropia.s3.ap-south-1.amazonaws.com/project-img/portfolio.gif',
+    description: 'My personal portfolio website showcasing projects and skills.',
+    image: placeholderImage,
     tags: ['Portfolio', 'React', 'Vue', 'TypeScript', 'MongoDB'],
     slug: 'portfolio',
     longDescription: 'My personal portfolio website showcasing my projects and skills.',
@@ -45,8 +48,8 @@ const projects: Project[] = [
     priority: 'high',
     teamSize: 1,
     role: 'Full Stack Developer',
-    startDate: '2024-12',
-    endDate: '2025-04',
+    startDate: '2025-08-17',
+    endDate: '2025-08-25',
     link: '',
     liveDemo: '',
   },
@@ -54,7 +57,7 @@ const projects: Project[] = [
     id: '2',
     title: 'GestureFlow: An Advanced Hand Gesture Control System',
     description: 'A real-time hand gesture control application for contactless interaction.',
-    image: 'https://neuropia.s3.ap-south-1.amazonaws.com/project-img/gesture.png',
+    image: placeholderImage,
     tags: ['Python', 'Computer Vision', 'AI', 'OpenCV', 'MediaPipe'],
     slug: 'gestureflow',
     longDescription: 'Built a real-time hand gesture control application using MediaPipe and OpenCV...',
@@ -76,10 +79,10 @@ const projects: Project[] = [
     liveDemo: '',
   },
   {
-    id: '2',
+    id: '3',
     title: 'Potato Leaf Disease Identification using DL',
     description: 'A deep learning application for identifying diseases in potato leaves.',
-    image: 'https://neuropia.s3.ap-south-1.amazonaws.com/project-img/potato.jpg',
+    image: placeholderImage,
     tags: ['Python', 'Deep Learning', 'Computer Vision', 'TensorFlow', 'Keras'],
     slug: 'potato-leaf-disease',
     longDescription: 'Built a robust disease identification application for potato crops using a ResNet50 model...',
@@ -101,10 +104,10 @@ const projects: Project[] = [
     liveDemo: '',
   },
   {
-    id: '3',
+    id: '4',
     title: 'Brain Tumor and Lung Disease Detection',
     description: 'AI-based medical image classification for brain tumor and lung disease diagnosis.',
-    image: 'https://neuropia.s3.ap-south-1.amazonaws.com/project-img/brain-lung.jpg',
+    image: placeholderImage,
     tags: ['Python', 'Deep Learning', 'TensorFlow', 'CNN', 'Medical AI'],
     slug: 'brain-tumor-lung-disease',
     longDescription: 'Developed deep learning models to detect brain tumors and lung diseases using medical imaging datasets...',
@@ -121,10 +124,10 @@ const projects: Project[] = [
     liveDemo: '',
   },
   {
-    id: '4',
+    id: '5',
     title: 'Virtual Healthcare Companion Chatbot',
     description: 'A full-stack AI-powered chatbot for healthcare queries with NLTK and Gemini API.',
-    image: 'https://neuropia.s3.ap-south-1.amazonaws.com/project-img/healthcare.jpg',
+    image: placeholderImage,
     tags: ['Python', 'Django', 'NLTK', 'NLP', 'Gradio', 'Gemini API'],
     slug: 'healthcare-chatbot',
     longDescription: 'Built an interactive chatbot that answers medical queries using NLP with NLTK and full-stack Django backend...',
@@ -141,10 +144,10 @@ const projects: Project[] = [
     liveDemo: '',
   },
   {
-    id: '5',
+    id: '6',
     title: 'Image Classification on CIFAR-10',
     description: 'Deep learning image classification project with GUI using PyQt5 and TensorFlow.',
-    image: 'https://neuropia.s3.ap-south-1.amazonaws.com/project-img/img-classifi.jpg',
+    image: placeholderImage,
     tags: ['Python', 'Deep Learning', 'PyQt5', 'TensorFlow', 'CIFAR-10'],
     slug: 'cifar10-classification',
     longDescription: 'Implemented CNNs to classify CIFAR-10 dataset images, with PyQt5 GUI for easy inference...',
@@ -160,36 +163,29 @@ const projects: Project[] = [
     link: 'https://github.com/Naveen-YN/Image-Classification-Using-Deep-Learning-Techniques-on-the-CIFAR-10',
     liveDemo: '',
   },
-    {
-    id: '5',
-    title: 'Image Classification on CIFAR-10',
-    description: 'Deep learning image classification project with GUI using PyQt5 and TensorFlow.',
-    image: 'https://neuropia.s3.ap-south-1.amazonaws.com/project-img/img-classifi.jpg',
-    tags: ['Python', 'Deep Learning', 'PyQt5', 'TensorFlow', 'CIFAR-10'],
-    slug: 'cifar10-classification',
-    longDescription: 'Implemented CNNs to classify CIFAR-10 dataset images, with PyQt5 GUI for easy inference...',
-    features: ['CNN training on CIFAR-10', 'PyQt5 GUI', 'Real-time classification'],
-    technologies: ['Python', 'TensorFlow', 'Keras', 'PyQt5'],
-    status: 'completed',
-    category: 'Academic',
-    priority: 'none',
-    teamSize: 1,
-    role: 'Developer and Contributor',
-    startDate: '2023-04',
-    endDate: '2023-08',
-    link: 'https://github.com/Naveen-YN/Image-Classification-Using-Deep-Learning-Techniques-on-the-CIFAR-10',
-    liveDemo: '',
-  },
 ];
-
 
 const ProjectsSection: React.FC = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
   const projectRefs = useRef<(HTMLDivElement | null)[]>([]);
-  
   const [filter, setFilter] = useState<'all' | 'completed' | 'in-progress' | 'planned' | 'n/a'>('all');
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
+
+  // Memoize categories to prevent recalculation
+  const categories = useMemo(() => ['all', ...Array.from(new Set(projects.map(p => p.category).filter(Boolean)))], []);
+
+  // Memoize filtered projects to optimize rendering
+  const filteredProjects = useMemo(() => {
+    return projects.filter(project => {
+      const matchesStatus = filter === 'all' || project.status === filter;
+      const matchesSearch = project.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                            project.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                            project.tags.some(tag => tag.toLowerCase().includes(searchTerm.toLowerCase()));
+      const matchesCategory = selectedCategory === 'all' || project.category === selectedCategory;
+      return matchesStatus && matchesSearch && matchesCategory;
+    });
+  }, [filter, searchTerm, selectedCategory]);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -219,29 +215,23 @@ const ProjectsSection: React.FC = () => {
         if (ref) observer.unobserve(ref);
       });
     };
-  }, []);
-
-  // Get unique categories
-  const categories = ['all', ...Array.from(new Set(projects.map(p => p.category).filter(Boolean)))];
-
-  // Filter projects
-  const filteredProjects = projects.filter(project => {
-    const matchesStatus = filter === 'all' || project.status === filter;
-    const matchesSearch = project.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         project.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         project.tags.some(tag => tag.toLowerCase().includes(searchTerm.toLowerCase()));
-    const matchesCategory = selectedCategory === 'all' || project.category === selectedCategory;
-    
-    return matchesStatus && matchesSearch && matchesCategory;
-  });
+  }, [filteredProjects]);
 
   const getStatusColor = (status?: string) => {
     switch (status) {
-      case 'completed': return 'bg-green-500/20 text-green-400 border-green-500/30';
-      case 'in-progress': return 'bg-yellow-500/20 text-yellow-400 border-yellow-500/30';
-      case 'planned': return 'bg-blue-500/20 text-blue-400 border-blue-500/30';
-      case 'n/a': return 'bg-gray-500/20 text-gray-400 border-gray-500/30';
-      default: return 'bg-gray-500/20 text-gray-400 border-gray-500/30';
+      case 'completed': return 'bg-green-500/20 text-green-400';
+      case 'in-progress': return 'bg-yellow-500/20 text-yellow-400';
+      case 'planned': return 'bg-blue-500/20 text-blue-400';
+      case 'n/a': return 'bg-gray-500/20 text-gray-400';
+      default: return 'bg-gray-500/20 text-gray-400';
+    }
+  };
+
+  const getCategoryColor = (category?: string) => {
+    switch (category) {
+      case 'Academic': return 'bg-blue-500/20 text-blue-400';
+      case 'Personal': return 'bg-purple-500/20 text-purple-400';
+      default: return 'bg-gray-500/20 text-gray-400';
     }
   };
 
@@ -255,96 +245,63 @@ const ProjectsSection: React.FC = () => {
     }
   };
 
-  const getCategoryIcon = (category?: string) => {
-    switch (category) {
-      case 'Academic': return FaGraduationCap;
-      case 'Personal': return FaUser;
-      case 'Professional': return FaBriefcase;
-      case 'Open Source': return FaHeart;
-      case 'Freelance': return FaLaptopCode;
-      case 'Hackathon': return FaTrophy;
-      case 'Research': return FaFlask;
-      default: return FaCode;
-    }
-  };
-
-  const getCategoryColor = (category?: string) => {
-    switch (category) {
-      case 'Academic': return 'text-blue-400 bg-blue-500/20 border-blue-500/30';
-      case 'Personal': return 'text-green-400 bg-green-500/20 border-green-500/30';
-      case 'Professional': return 'text-purple-400 bg-purple-500/20 border-purple-500/30';
-      case 'Open Source': return 'text-red-400 bg-red-500/20 border-red-500/30';
-      case 'Freelance': return 'text-yellow-400 bg-yellow-500/20 border-yellow-500/30';
-      case 'Hackathon': return 'text-orange-400 bg-orange-500/20 border-orange-500/30';
-      case 'Research': return 'text-cyan-400 bg-cyan-500/20 border-cyan-500/30';
-      default: return 'text-gray-400 bg-gray-500/20 border-gray-500/30';
-    }
+  // Dynamic font size based on title length
+  const getTitleFontSize = (title: string) => {
+    if (title.length > 30) return 'text-base md:text-lg';
+    if (title.length > 20) return 'text-lg md:text-xl';
+    return 'text-xl md:text-2xl';
   };
 
   const containerVariants = {
     hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1
-      }
-    }
+    visible: { opacity: 1, transition: { staggerChildren: 0.15, delayChildren: 0.2 } },
   };
 
   const cardVariants = {
-    hidden: { opacity: 0, y: 30, scale: 0.95 },
+    hidden: { opacity: 0, y: 40, scale: 0.9 },
     visible: {
       opacity: 1,
       y: 0,
       scale: 1,
-      transition: {
-        duration: 0.5,
-        ease: "easeOut"
-      }
-    }
+      transition: { duration: 0.6, ease: [0.4, 0, 0.2, 1] },
+    },
   };
 
   return (
-    <section id="projects" className="py-20 bg-black relative overflow-hidden">
-      {/* Background Elements */}
-      <div className="absolute inset-0 bg-gradient-to-br from-blue-900/5 via-transparent to-purple-900/5"></div>
-      <div className="absolute top-1/3 left-1/4 w-96 h-96 bg-blue-500/5 rounded-full blur-3xl"></div>
-      <div className="absolute bottom-1/3 right-1/4 w-96 h-96 bg-purple-500/5 rounded-full blur-3xl"></div>
-      
-      <div className="container mx-auto px-6 sm:px-12 md:px-20 lg:px-32 relative z-10">
-        {/* Enhanced Title */}
-        <motion.div 
-          className="text-center mb-16"
-          initial={{ opacity: 0, y: -20 }}
+    <section id="projects" className="py-24 bg-black relative overflow-hidden">
+      <div className="absolute inset-0 bg-gradient-to-br from-blue-950/20 via-black to-purple-950/20"></div>
+      <div className="absolute top-1/4 left-1/5 w-80 h-80 bg-blue-600/10 rounded-full blur-4xl animate-pulse"></div>
+      <div className="absolute bottom-1/4 right-1/5 w-80 h-80 bg-purple-600/10 rounded-full blur-4xl animate-pulse"></div>
+
+      <div className="container mx-auto px- sm:px-8 md:px-16 lg:px-24 xl:px-32 relative z-10">
+        <motion.div
+          className="text-center mb-20"
+          initial={{ opacity: 0, y: -30 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
         >
-          <div className="inline-block group">
-            <h2 className="text-4xl md:text-5xl font-bold tracking-wider mb-4">
-              My <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#09c6f9] to-[#045de9]">Projects</span>
-            </h2>
-            <motion.div
-              className="h-1 w-32 mx-auto bg-gradient-to-r from-[#09c6f9] to-[#045de9] rounded-full"
-              initial={{ scaleX: 0 }}
-              animate={{ scaleX: 1 }}
-              transition={{ duration: 0.8, delay: 0.3 }}
-            />
-          </div>
-          <p className="text-gray-400 text-lg mt-6 max-w-2xl mx-auto">
-            Showcasing innovative solutions and technical expertise through real-world applications
+          <h2 className="text-5xl md:text-6xl font-extrabold tracking-tight mb-6 font-sans">
+            My <span className="bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 to-blue-600">Projects</span>
+          </h2>
+          <motion.div
+            className="h-1 w-40 mx-auto bg-gradient-to-r from-cyan-400 to-blue-600 rounded-full"
+            initial={{ scaleX: 0 }}
+            animate={{ scaleX: 1 }}
+            transition={{ duration: 1, ease: "easeInOut" }}
+          />
+          <p className="text-gray-300 text-lg md:text-xl mt-6 max-w-3xl mx-auto leading-relaxed font-sans">
+            Discover innovative solutions and technical expertise through my real-world applications.
           </p>
         </motion.div>
 
-        {/* Filters and Search */}
-        <motion.div 
+        <motion.div
           className="mb-12"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
         >
-          <div className="bg-gray-900/50 backdrop-blur-xl rounded-2xl border border-gray-700/50 p-6">
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-              {/* Search */}
+          <div className="bg-black/90 backdrop-blur-2xl rounded-2xl p-6">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div className="relative">
                 <FaSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={16} />
                 <input
@@ -352,17 +309,17 @@ const ProjectsSection: React.FC = () => {
                   placeholder="Search projects..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="w-full pl-10 pr-4 py-3 bg-gray-800/50 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-[#09c6f9] focus:ring-2 focus:ring-[#09c6f9]/20 transition-all duration-300"
+                  className="w-full pl-10 pr-4 py-3 bg-gray-800/50 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition-all duration-300 font-sans"
+                  aria-label="Search projects by title, description, or tags"
                 />
               </div>
-
-              {/* Status Filter */}
               <div className="relative">
                 <FaFilter className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={16} />
                 <select
                   value={filter}
                   onChange={(e) => setFilter(e.target.value as any)}
-                  className="w-full pl-10 pr-4 py-3 bg-gray-800/50 border border-gray-600 rounded-lg text-white focus:outline-none focus:border-[#09c6f9] focus:ring-2 focus:ring-[#09c6f9]/20 transition-all duration-300 appearance-none"
+                  className="w-full pl-10 pr-4 py-3 bg-gray-800/50 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition-all duration-300 font-sans appearance-none"
+                  aria-label="Filter projects by status"
                 >
                   <option value="all">All Status</option>
                   <option value="completed">Completed</option>
@@ -371,14 +328,13 @@ const ProjectsSection: React.FC = () => {
                   <option value="n/a">N/A</option>
                 </select>
               </div>
-
-              {/* Category Filter */}
               <div className="relative">
-                <FaCode className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={16} />
+                <FaFilter className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={16} />
                 <select
                   value={selectedCategory}
                   onChange={(e) => setSelectedCategory(e.target.value)}
-                  className="w-full pl-10 pr-4 py-3 bg-gray-800/50 border border-gray-600 rounded-lg text-white focus:outline-none focus:border-[#09c6f9] focus:ring-2 focus:ring-[#09c6f9]/20 transition-all duration-300 appearance-none"
+                  className="w-full pl-10 pr-4 py-3 bg-gray-800/50 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition-all duration-300 font-sans appearance-none"
+                  aria-label="Filter projects by category"
                 >
                   {categories.map(category => (
                     <option key={category} value={category}>
@@ -387,210 +343,159 @@ const ProjectsSection: React.FC = () => {
                   ))}
                 </select>
               </div>
-
-              {/* Results Count */}
-              <div className="flex items-center justify-center bg-gray-800/30 rounded-lg px-4 py-3 border border-gray-700/50">
-                <span className="text-gray-400 text-sm">
-                  {filteredProjects.length} project{filteredProjects.length !== 1 ? 's' : ''} found
-                </span>
-              </div>
             </div>
           </div>
         </motion.div>
 
-        {/* Projects Grid */}
-        <motion.div 
+        <motion.div
           ref={sectionRef}
-          className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8"
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
           variants={containerVariants}
           initial="hidden"
           animate="visible"
         >
           <AnimatePresence mode="wait">
-            {filteredProjects.map((project, index) => {
-              const CategoryIcon = getCategoryIcon(project.category);
-              
-              return (
-                <motion.div 
-                  key={project.id}
-                  ref={el => projectRefs.current[index] = el}
-                  variants={cardVariants}
-                  layout
-                  whileHover={{ 
-                    y: -8,
-                    transition: { duration: 0.3 }
-                  }}
-                  className="group relative"
-                >
-                  {/* Card Background */}
-                  <div className="absolute inset-0 bg-gradient-to-br from-gray-800/50 to-gray-900/50 rounded-2xl blur-sm group-hover:blur-none transition-all duration-500"></div>
-                  
-                  {/* Main Card */}
-                  <div className="relative bg-black/80 backdrop-blur-xl rounded-2xl border border-gray-700/50 shadow-2xl transition-all duration-500 group-hover:shadow-3xl group-hover:border-[#09c6f9]/30 overflow-hidden h-full flex flex-col">
-                    {/* Project Image */}
-                    <div className="relative overflow-hidden h-48 bg-gradient-to-br from-gray-800 to-gray-900">
-                      {project.image ? (
-                        <img 
-                          src={project.image} 
-                          alt={project.title} 
-                          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                        />
-                      ) : (
-                        <div className="w-full h-full flex items-center justify-center">
-                          <FaCode size={48} className="text-gray-600" />
-                        </div>
+            {filteredProjects.map((project, index) => (
+              <motion.div
+                key={project.id}
+                ref={el => (projectRefs.current[index] = el)}
+                variants={cardVariants}
+                layout
+                whileHover={{ y: -10, scale: 1.02, transition: { duration: 0.3 } }}
+                className="relative h-[32rem] group"
+              >
+                <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 to-purple-500/10 rounded-2xl blur-md group-hover:blur-none transition-all duration-500"></div>
+                <div className="relative bg-black/90 backdrop-blur-2xl rounded-2xl shadow-xl overflow-hidden h-full flex flex-col">
+                  <div className="relative h-72 overflow-hidden">
+                    <div className="absolute inset-0 bg-gradient-to-br from-gray-800/30 to-gray-900/30"></div>
+                    {project.image ? (
+                      <img
+                        src={project.image}
+                        alt={project.title}
+                        className="w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-105"
+                        loading="lazy"
+                      />
+                    ) : (
+                      <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-gray-800 to-gray-900">
+                        <FaGithub size={48} className="text-gray-600" />
+                      </div>
+                    )}
+                    <div className="absolute top-4 left-4 flex items-center gap-2">
+                      {project.status && (
+                        <span className={`px-2 py-1 rounded-full text-xs font-medium ${getStatusColor(project.status)} font-sans`}>
+                          {project.status === 'n/a' ? 'N/A' : project.status.replace('-', ' ')}
+                        </span>
                       )}
-                      
-                      {/* Overlay with Status and Priority */}
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent">
-                        <div className="absolute top-4 left-4 flex items-center gap-2">
-                          {project.status && (
-                            <span className={`px-2 py-1 rounded-full text-xs font-medium border ${getStatusColor(project.status)}`}>
-                              {project.status === 'n/a' ? 'N/A' : project.status.replace('-', ' ')}
-                            </span>
-                          )}
-                          {project.priority && project.priority !== 'none' && (
-                            <div className={`w-3 h-3 rounded-full ${getPriorityColor(project.priority)}`} title={`${project.priority} priority`}></div>
-                          )}
-                        </div>
-                        
-                        {/* Category Badge */}
-                        {project.category && (
-                          <div className="absolute top-4 right-4 flex items-center gap-1 bg-black/50 backdrop-blur-sm rounded-full px-2 py-1">
-                            <CategoryIcon size={12} className={getCategoryColor(project.category).split(' ')[0]} />
-                            <span className="text-white text-xs">{project.category}</span>
+                      {project.category && (
+                        <span className={`px-2 py-1 rounded-full text-xs font-medium ${getCategoryColor(project.category)} font-sans`}>
+                          {project.category}
+                        </span>
+                      )}
+                      {project.priority && project.priority !== 'none' && (
+                        <div className={`w-3 h-3 rounded-full ${getPriorityColor(project.priority)}`} title={`${project.priority} priority`}></div>
+                      )}
+                    </div>
+                  </div>
+                  <div className="p-6 flex flex-col flex-grow">
+                    <h3 className={`font-semibold text-white mb-3 font-sans line-clamp-2 group-hover:text-cyan-400 transition-colors duration-300 ${getTitleFontSize(project.title)}`}>
+                      {project.title}
+                    </h3>
+                    <p className="text-gray-300 text-sm leading-relaxed line-clamp-2 font-sans mb-4">{project.description}</p>
+                    {(project.startDate || project.teamSize || project.role) && (
+                      <div className="mb-4 space-y-2">
+                        {project.startDate && (
+                          <div className="flex items-center gap-2 text-xs text-gray-400 font-sans">
+                            <FaCalendarAlt size={12} />
+                            <span>{project.startDate} {project.endDate && `- ${project.endDate}`}</span>
+                          </div>
+                        )}
+                        {project.teamSize && (
+                          <div className="flex items-center gap-2 text-xs text-gray-400 font-sans">
+                            <FaUsers size={12} />
+                            <span>Team of {project.teamSize}</span>
+                          </div>
+                        )}
+                        {project.role && (
+                          <div className="text-xs text-gray-400 font-sans">
+                            <span className="font-medium">Role:</span> {project.role}
                           </div>
                         )}
                       </div>
-                    </div>
-
-                    {/* Project Content */}
-                    <div className="p-6 flex-grow flex flex-col">
-                      {/* Header */}
-                      <div className="mb-4">
-                        <div className="flex items-start justify-between mb-2">
-                          <h3 className="text-xl font-bold text-white group-hover:text-[#09c6f9] transition-colors duration-300 flex-1">
-                            {project.title}
-                          </h3>
-                          {project.category && (
-                            <span className={`ml-2 px-2 py-1 rounded-full text-xs font-medium border ${getCategoryColor(project.category)} flex items-center gap-1 flex-shrink-0`}>
-                              <CategoryIcon size={10} />
-                              {project.category}
-                            </span>
-                          )}
-                        </div>
-                        <p className="text-gray-400 text-sm leading-relaxed line-clamp-3">
-                          {project.description}
-                        </p>
-                      </div>
-
-                      {/* Project Meta */}
-                      {(project.startDate || project.teamSize || project.role) && (
-                        <div className="mb-4 space-y-2">
-                          {project.startDate && (
-                            <div className="flex items-center gap-2 text-xs text-gray-500">
-                              <FaCalendarAlt size={12} />
-                              <span>{project.startDate} {project.endDate && `- ${project.endDate}`}</span>
-                            </div>
-                          )}
-                          {project.teamSize && (
-                            <div className="flex items-center gap-2 text-xs text-gray-500">
-                              <FaUsers size={12} />
-                              <span>Team of {project.teamSize}</span>
-                            </div>
-                          )}
-                          {project.role && (
-                            <div className="text-xs text-gray-500">
-                              <span className="font-medium">Role:</span> {project.role}
-                            </div>
-                          )}
-                        </div>
+                    )}
+                    <div className="flex flex-wrap gap-2 mb-4">
+                      {project.tags.slice(0, 3).map((tag, i) => (
+                        <span key={i} className="text-xs bg-gray-800/50 text-gray-300 px-3 py-1 rounded-full font-sans">
+                          {tag}
+                        </span>
+                      ))}
+                      {project.tags.length > 3 && (
+                        <span className="text-xs text-gray-500 font-sans px-2 py-1">+{project.tags.length - 3} more</span>
                       )}
-
-                      {/* Tags */}
-                      <div className="mb-6 flex-grow">
-                        <div className="flex flex-wrap gap-2">
-                          {project.tags.slice(0, 4).map((tag, i) => (
-                            <span key={i} className="text-xs bg-gray-800/50 text-gray-300 px-3 py-1 rounded-full border border-gray-700/50 hover:border-[#09c6f9]/30 transition-colors duration-300">
-                              {tag}
-                            </span>
-                          ))}
-                          {project.tags.length > 4 && (
-                            <span className="text-xs text-gray-500 px-2 py-1">
-                              +{project.tags.length - 4} more
-                            </span>
-                          )}
-                        </div>
-                      </div>
-
-                      {/* Action Buttons */}
-                      <div className="flex gap-3 mt-auto">
-                        {project.link && (
-                          <motion.a 
-                            href={project.link} 
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="flex items-center gap-2 px-4 py-2 bg-gray-800/50 hover:bg-gray-700/50 text-white rounded-lg text-sm transition-all duration-300 border border-gray-700/50 hover:border-[#09c6f9]/30 flex-1 justify-center"
-                            whileHover={{ scale: 1.02 }}
-                            whileTap={{ scale: 0.98 }}
-                          >
-                            <FaGithub size={16} />
-                            <span>Code</span>
-                          </motion.a>
-                        )}
-                        
-                        {project.liveDemo && (
-                          <motion.a 
-                            href={project.liveDemo} 
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="flex items-center gap-2 px-4 py-2 bg-[#045de9]/20 hover:bg-[#045de9]/30 text-[#09c6f9] rounded-lg text-sm transition-all duration-300 border border-[#09c6f9]/30 hover:border-[#09c6f9]/50 flex-1 justify-center"
-                            whileHover={{ scale: 1.02 }}
-                            whileTap={{ scale: 0.98 }}
-                          >
-                            <FaExternalLinkAlt size={14} />
-                            <span>Demo</span>
-                          </motion.a>
-                        )}
-                        
-                        <motion.div className="flex-1">
-                          <Link 
-                            to={`/project/${project.slug}`}
-                            className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-[#045de9] to-[#09c6f9] text-white rounded-lg text-sm transition-all duration-300 hover:shadow-lg hover:shadow-[#045de9]/25 w-full justify-center"
-                          >
-                            <span>Details</span>
-                          </Link>
-                        </motion.div>
-                      </div>
+                    </div>
+                    <div className="flex gap-3 mt-auto">
+                      {project.link && (
+                        <motion.a
+                          href={project.link}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-gray-800/50 to-gray-900/50 hover:from-gray-700/50 hover:to-gray-800/50 text-white rounded-lg text-sm font-sans transition-all duration-300 flex-1 justify-center"
+                          whileHover={{ scale: 1.02 }}
+                          whileTap={{ scale: 0.98 }}
+                          aria-label={`View ${project.title} code on GitHub`}
+                        >
+                          <FaGithub size={16} />
+                          <span>Code</span>
+                        </motion.a>
+                      )}
+                      {project.liveDemo && (
+                        <motion.a
+                          href={project.liveDemo}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-cyan-500/30 to-blue-600/30 hover:from-cyan-600/40 hover:to-blue-700/40 text-white rounded-lg text-sm font-sans transition-all duration-300 flex-1 justify-center"
+                          whileHover={{ scale: 1.02 }}
+                          whileTap={{ scale: 0.98 }}
+                          aria-label={`View ${project.title} live demo`}
+                        >
+                          <FaExternalLinkAlt size={14} />
+                          <span>Demo</span>
+                        </motion.a>
+                      )}
+                      <motion.div className="flex-1">
+                        <Link
+                          to={`/project/${project.slug}`}
+                          className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-white rounded-lg text-sm font-sans transition-all duration-300 w-full justify-center"
+                          aria-label={`View details for ${project.title}`}
+                        >
+                          <span>Details</span>
+                        </Link>
+                      </motion.div>
                     </div>
                   </div>
-
-                  {/* Hover Glow Effect */}
-                  <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-blue-500/5 to-purple-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 -z-10 blur-xl"></div>
-                </motion.div>
-              );
-            })}
+                </div>
+              </motion.div>
+            ))}
           </AnimatePresence>
         </motion.div>
 
-        {/* Empty State */}
         {filteredProjects.length === 0 && (
-          <motion.div 
+          <motion.div
             className="text-center py-16"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.5 }}
           >
-            <FaCode size={64} className="mx-auto mb-6 text-gray-600" />
-            <h3 className="text-2xl font-bold text-gray-400 mb-4">No Projects Found</h3>
-            <p className="text-gray-500 mb-6">Try adjusting your search criteria or filters</p>
+            <FaGithub size={64} className="mx-auto mb-6 text-gray-600" />
+            <h3 className="text-2xl font-bold text-gray-300 mb-4 font-sans">No Projects Found</h3>
+            <p className="text-gray-400 mb-6 font-sans">Try adjusting your search criteria or filters</p>
             <button
               onClick={() => {
                 setSearchTerm('');
                 setFilter('all');
                 setSelectedCategory('all');
               }}
-              className="px-6 py-3 bg-[#045de9] hover:bg-[#09c6f9] text-white rounded-lg transition-colors duration-300"
+              className="px-6 py-3 bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-white rounded-lg font-sans transition-all duration-300"
+              aria-label="Clear all filters"
             >
               Clear Filters
             </button>
