@@ -27,6 +27,7 @@ const iconComponents: { [key: string]: React.ComponentType<{ size: number; class
   FaHandshake: FaIcons.FaHandshake,
   FaMobile: FaIcons.FaMobile,
   FaCode: FaIcons.FaCode,
+  FaUsers: FaIcons.FaUsers,
 };
 
 // --- SKILL INTERFACE ---
@@ -52,9 +53,10 @@ const customSkills: Skill[] = [
   { name: "Docker", category: "DevOps", icon: "SiDocker" },
   { name: "TensorFlow", category: "AI & Machine Learning", icon: "SiTensorflow" },
   { name: "PyTorch", category: "AI & Machine Learning", icon: "SiPytorch" },
-  { name: "Unity", category: "Game Development", icon: "SiUnity" },
-  { name: "Photoshop", category: "Design", icon: "SiAdobephotoshop" },
+  // { name: "Unity", category: "Game Development", icon: "SiUnity" },
+  // { name: "Photoshop", category: "Design", icon: "SiAdobephotoshop" },
   { name: "Collaboration", category: "Soft Skills", icon: "FaHandshake" },
+  { name: "Teamwork", category: "Soft Skills", icon: "FaUsers"}
 ];
 
 // --- CATEGORY ICONS ---
@@ -69,6 +71,7 @@ const categoryIcons: Record<string, keyof typeof iconComponents> = {
   Design: "SiAdobephotoshop",
   "Soft Skills": "FaHandshake",
   DevOps: "SiDocker",
+  "Frameworks": "FaCode"
 };
 
 // --- CATEGORY COLORS (Glow + Accent) ---

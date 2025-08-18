@@ -30,32 +30,16 @@ const AboutSection: React.FC = () => {
       icon: "Briefcase",
       isActive: true,
     },
-    {
-      id: 3,
-      title: "Machine Learning",
-      description:
-        "Practical exposure to AI/ML projects including predictive models.",
-      icon: "Lightbulb",
-      isActive: true,
-    },
-    {
-      id: 4,
-      title: "Career Goal",
-      description:
-        "Eager to contribute in a collaborative environment and grow as a software engineer.",
-      icon: "Target",
-      isActive: true,
-    },
   ];
 
   // 🔹 Hardcoded Additional Highlights
   const additionalHighlights = [
     {
       id: 1,
-      title: "Cloud & DevOps",
+      title: "Career Goal",
       description:
-        "Knowledge of AWS, Docker, and Linux system administration.",
-      icon: "Briefcase",
+        "Eager to contribute in a collaborative environment and grow as a software engineer.",
+      icon: "Target",
       isActive: true,
     },
     {
