@@ -6,10 +6,16 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "build:github": "vite build --base=/naveen-yn/",
     "lint": "eslint .",
     "preview": "vite preview"
   },
+  "scripts": {
+  "dev": "vite",
+  "build": "vite build",
+  
+  "lint": "eslint .",
+  "preview": "vite preview"
+}
   "dependencies": {
     "@supabase/supabase-js": "^2.55.0",
     "framer-motion": "^12.8.0",
