@@ -16,6 +16,7 @@ import ProjectPage from "./pages/ProjectPage"
 import ResumeRedirect from "./components/ResumeRedirect"
 // --- IMPORT THE NEW NOTIFICATION COMPONENT ---
 import MaintenanceNotification from "./components/MaintenanceNotification"
+import AnimatedCursor from "./components/AnimatedCursor";
 
 import "./App.css"
 import 'slick-carousel/slick/slick.css'
@@ -136,6 +137,8 @@ function App() {
         <Route path="/project/:slug" element={<ProjectPage />} />
       </Routes>
             <MaintenanceNotification />
+                  <AnimatedCursor />
+
     </>
   )
 }

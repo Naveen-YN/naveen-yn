@@ -62,17 +62,17 @@ const CertificatesSection: React.FC = () => {
     },
     {
       id: "2",
-      title: "AWS Certified Cloud Practitioner",
-      issuer: "AWS",
+      title: "",
+      issuer: "",
       description:
-        "AWS Certified Cloud Practitioner demonstrating knowledge of AWS cloud services.",
-      issueDate: "Dec 2023",
-      expiryDate: "Dec 2026",
-      credentialUrl: "https://example.com/cert/aws",
+        "",
+      issueDate: "",
+      expiryDate: "",
+      credentialUrl: "",
       image:
-        "https://via.placeholder.com/400x250.png?text=AWS+Certificate",
-      category: "Professional",
-      skills: ["AWS", "Cloud", "Security"],
+        "",
+      category: "",
+      skills: [],
       verified: false,
     },
   ];
@@ -123,12 +123,13 @@ const CertificatesSection: React.FC = () => {
 
   return (
     <section id="certificates" className="py-24 bg-black relative overflow-hidden">
-      {/* Background unchanged */}
+      {/* Background effects */}
       <div className="absolute inset-0 bg-gradient-to-br from-blue-950/20 via-black to-purple-950/20"></div>
       <div className="absolute top-1/4 left-1/5 w-80 h-80 bg-blue-600/10 rounded-full blur-4xl animate-pulse"></div>
       <div className="absolute bottom-1/4 right-1/5 w-80 h-80 bg-purple-600/10 rounded-full blur-4xl animate-pulse"></div>
 
       <div className="container mx-auto px-4 sm:px-8 md:px-16 lg:px-24 xl:px-32 relative z-10">
+        {/* Section Heading */}
         <motion.div
           className="text-center mb-20"
           initial={{ opacity: 0, y: -30 }}
@@ -152,6 +153,7 @@ const CertificatesSection: React.FC = () => {
           </p>
         </motion.div>
 
+        {/* Certificates Grid */}
         {isClient && (
           <motion.div
             className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8"
@@ -161,7 +163,7 @@ const CertificatesSection: React.FC = () => {
           >
             {certificates.map((cert) => {
               const CategoryIcon = getCategoryIcon(cert.category);
-              const { border, text, bg } = getCategoryColor(cert.category);
+              const { border, text } = getCategoryColor(cert.category);
 
               return (
                 <motion.button
@@ -191,7 +193,7 @@ const CertificatesSection: React.FC = () => {
                     <p className="text-gray-300 text-sm font-medium font-sans">{cert.issuer}</p>
                     <p className="text-gray-400 text-xs font-sans">
                       {cert.issueDate}
-                      {cert.expiryDate && ` - Expires: ${cert.expiryDate}`}
+                      {cert.expiryDate && cert.expiryDate !== "No Expiry" && ` • Expires: ${cert.expiryDate}`}
                     </p>
                     {cert.verified && (
                       <span className="inline-flex items-center gap-1 px-2 py-1 rounded-full bg-green-900/30 text-green-400 text-xs font-semibold font-sans">
@@ -205,6 +207,7 @@ const CertificatesSection: React.FC = () => {
           </motion.div>
         )}
 
+        {/* Modal Preview */}
         <AnimatePresence>
           {selectedCertificate && isClient && (
             <motion.div
@@ -231,36 +234,47 @@ const CertificatesSection: React.FC = () => {
                 </button>
 
                 <div className="p-6 sm:p-8 space-y-6">
-                  <div className="flex items-center gap-3">
+                  {/* Title & Category */}
+                  <div className="flex items-center gap-3 flex-wrap">
                     {(() => {
                       const Icon = getCategoryIcon(selectedCertificate.category);
                       const { text } = getCategoryColor(selectedCertificate.category);
-                      return <Icon size={24} className={`${text} animate-pulse`} />;
+                      return <Icon size={26} className={`${text} animate-pulse`} />;
                     })()}
                     <h3 id="certificate-title" className="font-bold text-white text-xl sm:text-2xl md:text-3xl font-sans leading-tight break-words">
                       {selectedCertificate.title}
                     </h3>
                   </div>
 
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
-                    {selectedCertificate.issuer && (
-                      <span className="px-4 py-2 rounded-lg bg-gray-800/60 text-gray-100 font-sans">
-                        <strong>Issuer:</strong> {selectedCertificate.issuer}
-                      </span>
-                    )}
+                  {/* Timeline */}
+                  <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 text-sm text-gray-300">
                     {selectedCertificate.issueDate && (
-                      <span className="px-4 py-2 rounded-lg bg-gray-800/60 text-gray-100 font-sans">
-                        <strong>Issued:</strong> {selectedCertificate.issueDate}
-                      </span>
+                      <div className="flex items-center gap-2">
+                        <span className="w-2 h-2 rounded-full bg-blue-400"></span>
+                        <span>Issued: {selectedCertificate.issueDate}</span>
+                      </div>
                     )}
-                    {selectedCertificate.expiryDate && (
-                      <span className="px-4 py-2 rounded-lg bg-gray-800/60 text-gray-100 font-sans">
-                        <strong>Expires:</strong> {selectedCertificate.expiryDate}
+                    {selectedCertificate.expiryDate && selectedCertificate.expiryDate !== "No Expiry" && (
+                      <>
+                        <div className="hidden sm:block w-10 h-px bg-gray-600"></div>
+                        <div className="flex items-center gap-2">
+                          <span className="w-2 h-2 rounded-full bg-red-400"></span>
+                          <span>Expires: {selectedCertificate.expiryDate}</span>
+                        </div>
+                      </>
+                    )}
+                  </div>
+
+                  {/* Tags */}
+                  <div className="flex flex-wrap gap-2">
+                    {selectedCertificate.issuer && (
+                      <span className="px-3 py-1 rounded-full bg-gray-800/70 text-gray-100 text-sm font-sans">
+                        Issuer: {selectedCertificate.issuer}
                       </span>
                     )}
                     {selectedCertificate.credentialId && (
-                      <span className="px-4 py-2 rounded-lg bg-gray-800/60 text-gray-100 font-sans">
-                        <strong>Credential ID:</strong> {selectedCertificate.credentialId}
+                      <span className="px-3 py-1 rounded-full bg-purple-900/40 text-purple-300 text-sm font-sans">
+                        ID: {selectedCertificate.credentialId}
                       </span>
                     )}
                     {selectedCertificate.verified && (
@@ -270,6 +284,7 @@ const CertificatesSection: React.FC = () => {
                     )}
                   </div>
 
+                  {/* Image */}
                   <div className="w-full flex justify-center">
                     <img
                       src={selectedCertificate.image}
@@ -279,36 +294,42 @@ const CertificatesSection: React.FC = () => {
                     />
                   </div>
 
+                  {/* Description */}
                   <p className="text-gray-100 leading-relaxed text-base font-sans">
                     {selectedCertificate.description}
                   </p>
 
-                  {selectedCertificate.skills && selectedCertificate.skills.length > 0 && (
-                    <div>
-                      <h4 className="text-gray-50 font-semibold mb-3 text-lg font-sans">Skills Gained:</h4>
-                      <div className="flex flex-wrap gap-2">
-                        {selectedCertificate.skills.map((skill, idx) => (
-                          <span
-                            key={idx}
-                            className="px-4 py-1.5 bg-gray-800/60 text-gray-100 text-sm rounded-full hover:bg-gray-700/70 hover:text-white transition-all font-sans"
-                          >
-                            {skill}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-                  )}
+                  {/* Skills & Credential button row */}
+                  {(selectedCertificate.skills && selectedCertificate.skills.length > 0) || selectedCertificate.credentialUrl ? (
+                    <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                      {selectedCertificate.skills && selectedCertificate.skills.length > 0 && (
+                        <div>
+                          <h4 className="text-gray-50 font-semibold mb-3 text-lg font-sans">Skills Gained:</h4>
+                          <div className="flex flex-wrap gap-2">
+                            {selectedCertificate.skills.map((skill, idx) => (
+                              <span
+                                key={idx}
+                                className="px-4 py-1.5 bg-gray-800/60 text-gray-100 text-sm rounded-full hover:bg-gray-700/70 hover:text-white transition-all font-sans"
+                              >
+                                {skill}
+                              </span>
+                            ))}
+                          </div>
+                        </div>
+                      )}
 
-                  {selectedCertificate.credentialUrl && (
-                    <a
-                      href={selectedCertificate.credentialUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-block mt-6 px-6 py-3 bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-white font-semibold rounded-lg shadow-md transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500/50 font-sans"
-                    >
-                      View Credential
-                    </a>
-                  )}
+                      {selectedCertificate.credentialUrl && (
+                        <a
+                          href={selectedCertificate.credentialUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="self-end sm:self-auto px-6 py-3 bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-white font-semibold rounded-lg shadow-md transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500/50 font-sans"
+                        >
+                          View Credential
+                        </a>
+                      )}
+                    </div>
+                  ) : null}
                 </div>
               </motion.div>
             </motion.div>
