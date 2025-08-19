@@ -1,18 +1,29 @@
+# 👋 Hi, I'm Naveen YN  
 
-<!--
-**Naveen-YN/naveen-yn** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.
+💻 Full-Stack Developer | 🚀 Tech Enthusiast | 🎨 UI/UX Explorer  
 
-Here are some ideas to get you started:
+---
 
-- 🔭 I’m currently working on ...
-- 🌱 I’m currently learning ...
-- 👯 I’m looking to collaborate on ...`
-- 🤔 I’m looking for help with ...
-- 💬 Ask me about ...
-- 📫 How to reach me: ...
-- 😄 Pronouns: ...
-- ⚡ Fun fact: ...
--->
-- 🔭 I’m currently working on my portfolio...
-  
-[![Netlify Status](https://api.netlify.com/api/v1/badges/9ac3e6d2-ab64-420a-8b8d-eb025856c218/deploy-status)](https://app.netlify.com/projects/naveen-nyn/deploys)
+### 🔥 Currently:
+- 🔭 Building my **portfolio website**    
+
+---
+
+### 📊 GitHub Stats  
+<p align="center">
+  <img src="https://github-readme-stats.vercel.app/api?username=Naveen-YN&show_icons=true&theme=transparent" height="160"/>
+  <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=Naveen-YN&layout=compact&theme=transparent" height="160"/>
+</p>
+
+---
+
+### 🌐 Portfolio  
+- 🎨 [Portfolio Website]([https://naveenyn.dev](https://naveen.neuropia.tech/))  
+- 🚀 Latest Deployments:  
+  [![Netlify Status](https://api.netlify.com/api/v1/badges/9ac3e6d2-ab64-420a-8b8d-eb025856c218/deploy-status)](https://app.netlify.com/sites/naveen-nyn/deploys)  
+
+---
+
+### 🤝 Connect With Me  
+[LinkedIn](https://www.linkedin.com/in/naveen-yn/]) · [Portfolio]([https://naveenyn.dev](https://naveen.neuropia.tech/))  
+
