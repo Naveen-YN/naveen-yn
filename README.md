@@ -9,14 +9,6 @@
 
 ---
 
-### 📊 GitHub Stats  
-<p align="center">
-  <img src="https://github-readme-stats.vercel.app/api?username=Naveen-YN&show_icons=true&theme=transparent" height="160"/>
-  <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=Naveen-YN&layout=compact&theme=transparent" height="160"/>
-</p>
-
----
-
 ### 🌐 Portfolio  
 - 🎨 [Portfolio Website]([https://naveenyn.dev](https://naveen.neuropia.tech/))  
 - 🚀 Latest Deployments:  
@@ -27,3 +19,11 @@
 ### 🤝 Connect With Me  
 [LinkedIn](https://www.linkedin.com/in/naveen-yn/]) · [Portfolio]([https://naveenyn.dev](https://naveen.neuropia.tech/))  
 
+---
+
+### 📊 GitHub Stats  
+<p align="center">
+  <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=Naveen-YN&layout=compact&theme=transparent" height="160"/>
+</p>
+
+---
