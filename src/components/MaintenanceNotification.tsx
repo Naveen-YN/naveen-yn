@@ -45,6 +45,7 @@ const MaintenanceNotification: React.FC = () => {
               <p className="text-sm text-gray-800 mt-1">
                 I’m improving my portfolio! New features are on the way, and you
                 might notice a few bugs—thanks for sticking around.
+                
               </p>
             </div>
           </div>

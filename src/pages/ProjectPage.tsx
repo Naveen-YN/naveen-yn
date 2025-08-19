@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useInView } from 'react-intersection-observer';
 import { 
   ArrowLeft, 
   ExternalLink, 
@@ -24,7 +25,10 @@ import {
   X,
   Play,
   Pause,
-  RotateCcw
+  RotateCcw,
+  Circle,
+  Clock,
+  Flag
 } from 'lucide-react';
 
 // --- INTERFACES ---
@@ -212,6 +216,54 @@ const projects: Project[] = [
   },
 ];
 
+// --- UTILITY FUNCTIONS ---
+const getStatusColor = (status?: string) => {
+  switch (status) {
+    case 'completed': return 'bg-gradient-to-r from-green-600/40 to-green-800/40 text-green-200 hover:from-green-600/60 hover:to-green-800/60 border border-green-600/60 shadow-sm shadow-green-700/30';
+    case 'in-progress': return 'bg-gradient-to-r from-yellow-600/40 to-yellow-800/40 text-yellow-200 hover:from-yellow-600/60 hover:to-yellow-800/60 border border-yellow-600/60 shadow-sm shadow-yellow-700/30';
+    case 'planned': return 'bg-gradient-to-r from-blue-600/40 to-blue-800/40 text-blue-200 hover:from-blue-600/60 hover:to-blue-800/60 border border-blue-600/60 shadow-sm shadow-blue-700/30';
+    case 'n/a': return 'bg-gradient-to-r from-gray-600/40 to-gray-800/40 text-gray-200 hover:from-gray-600/60 hover:to-gray-800/60 border border-gray-600/60 shadow-sm shadow-gray-700/30';
+    default: return 'bg-gradient-to-r from-gray-600/40 to-gray-800/40 text-gray-200 hover:from-gray-600/60 hover:to-gray-800/60 border border-gray-600/60 shadow-sm shadow-gray-700/30';
+  }
+};
+
+const getCategoryColor = (category?: string) => {
+  switch (category) {
+    case 'Academic': return 'bg-gradient-to-r from-blue-700/40 to-blue-900/40 text-blue-100 hover:from-blue-700/60 hover:to-blue-900/60 border border-blue-700/60 shadow-sm shadow-blue-800/30';
+    case 'Personal': return 'bg-gradient-to-r from-purple-700/40 to-purple-900/40 text-purple-100 hover:from-purple-700/60 hover:to-purple-900/60 border border-purple-700/60 shadow-sm shadow-purple-800/30';
+    default: return 'bg-gradient-to-r from-gray-700/40 to-gray-900/40 text-gray-100 hover:from-gray-700/60 hover:to-gray-900/60 border border-gray-700/60 shadow-sm shadow-gray-800/30';
+  }
+};
+
+const getPriorityColor = (priority?: string) => {
+  switch (priority) {
+    case 'high': return 'bg-gradient-to-r from-red-600/40 to-red-800/40 text-red-200 hover:from-red-600/60 hover:to-red-800/60 border border-red-600/60 shadow-sm shadow-red-700/30';
+    case 'medium': return 'bg-gradient-to-r from-yellow-600/40 to-yellow-800/40 text-yellow-200 hover:from-yellow-600/60 hover:to-yellow-800/60 border border-yellow-600/60 shadow-sm shadow-yellow-700/30';
+    case 'low': return 'bg-gradient-to-r from-green-600/40 to-green-800/40 text-green-200 hover:from-green-600/60 hover:to-green-800/60 border border-green-600/60 shadow-sm shadow-green-700/30';
+    case 'none': return 'bg-gradient-to-r from-gray-600/40 to-gray-800/40 text-gray-200 hover:from-gray-600/60 hover:to-gray-800/60 border border-gray-600/60 shadow-sm shadow-gray-700/30';
+    default: return 'bg-gradient-to-r from-gray-600/40 to-gray-800/40 text-gray-200 hover:from-gray-600/60 hover:to-gray-800/60 border border-gray-600/60 shadow-sm shadow-gray-700/30';
+  }
+};
+
+const getTagColor = (tag: string) => {
+  const colors = [
+    'bg-gradient-to-r from-blue-600/40 to-blue-800/40 text-blue-100 hover:from-blue-600/60 hover:to-blue-800/60 border border-blue-700/60 shadow-sm shadow-blue-700/30',
+    'bg-gradient-to-r from-purple-600/40 to-purple-800/40 text-purple-100 hover:from-purple-600/60 hover:to-purple-800/60 border border-purple-700/60 shadow-sm shadow-purple-700/30',
+    'bg-gradient-to-r from-green-600/40 to-green-800/40 text-green-100 hover:from-green-600/60 hover:to-green-800/60 border border-green-700/60 shadow-sm shadow-green-700/30',
+    'bg-gradient-to-r from-yellow-600/40 to-yellow-800/40 text-yellow-100 hover:from-yellow-600/60 hover:to-yellow-800/60 border border-yellow-700/60 shadow-sm shadow-yellow-700/30',
+    'bg-gradient-to-r from-red-600/40 to-red-800/40 text-red-100 hover:from-red-600/60 hover:to-red-800/60 border border-red-700/60 shadow-sm shadow-red-700/30',
+  ];
+  const hash = tag.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
+  return colors[hash % colors.length];
+};
+
+const getTitleFontSize = (title: string) => {
+  if (title.length > 40) return 'text-base sm:text-lg md:text-xl';
+  if (title.length > 30) return 'text-lg sm:text-xl md:text-2xl';
+  if (title.length > 20) return 'text-xl sm:text-2xl md:text-3xl';
+  return 'text-2xl sm:text-3xl md:text-4xl';
+};
+
 // --- COMPONENT ---
 const ProjectPage: React.FC = () => {
   const { slug } = useParams<{ slug: string }>();
@@ -231,17 +283,33 @@ const ProjectPage: React.FC = () => {
     if (isAutoPlay && project?.screenshots && project.screenshots.length > 1) {
       const interval = setInterval(() => {
         setCurrentImageIndex((prev) => 
-          prev === (project.screenshots?.length ?? 0) ? 0 : prev + 1
+          prev === (project.screenshots?.length ?? 0) - 1 ? 0 : prev + 1
         );
       }, 3000);
       return () => clearInterval(interval);
     }
   }, [isAutoPlay, project?.screenshots]);
 
-  // Find related projects based on shared tags
   const relatedProjects = projects
     .filter((p) => p.slug !== slug && p.tags.some((tag) => project?.tags.includes(tag)))
     .slice(0, 3);
+
+  const shareProject = async () => {
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: project?.title,
+          text: project?.description,
+          url: window.location.href,
+        });
+      } catch (err) {
+        console.log('Error sharing:', err);
+      }
+    } else {
+      navigator.clipboard.writeText(window.location.href);
+      alert('Project URL copied to clipboard!');
+    }
+  };
 
   if (!project) {
     return (
@@ -264,102 +332,55 @@ const ProjectPage: React.FC = () => {
 
   const allImages = [project.image, ...(project.screenshots || [])].filter(Boolean) as string[];
 
-  const getStatusColor = (status?: string) => {
-    switch (status) {
-      case 'completed': return 'bg-gradient-to-r from-green-600/40 to-green-800/40 text-green-200 hover:from-green-600/60 hover:to-green-800/60 border border-green-600/60 shadow-sm shadow-green-700/30';
-      case 'in-progress': return 'bg-gradient-to-r from-yellow-600/40 to-yellow-800/40 text-yellow-200 hover:from-yellow-600/60 hover:to-yellow-800/60 border border-yellow-600/60 shadow-sm shadow-yellow-700/30';
-      case 'planned': return 'bg-gradient-to-r from-blue-600/40 to-blue-800/40 text-blue-200 hover:from-blue-600/60 hover:to-blue-800/60 border border-blue-600/60 shadow-sm shadow-blue-700/30';
-      case 'n/a': return 'bg-gradient-to-r from-gray-600/40 to-gray-800/40 text-gray-200 hover:from-gray-600/60 hover:to-gray-800/60 border border-gray-600/60 shadow-sm shadow-gray-700/30';
-      default: return 'bg-gradient-to-r from-gray-600/40 to-gray-800/40 text-gray-200 hover:from-gray-600/60 hover:to-gray-800/60 border border-gray-600/60 shadow-sm shadow-gray-700/30';
-    }
-  };
-
-  const getCategoryColor = (category?: string) => {
-    switch (category) {
-      case 'Academic': return 'bg-gradient-to-r from-blue-700/40 to-blue-900/40 text-blue-100 hover:from-blue-700/60 hover:to-blue-900/60 border border-blue-700/60 shadow-sm shadow-blue-800/30';
-      case 'Personal': return 'bg-gradient-to-r from-purple-700/40 to-purple-900/40 text-purple-100 hover:from-purple-700/60 hover:to-purple-900/60 border border-purple-700/60 shadow-sm shadow-purple-800/30';
-      default: return 'bg-gradient-to-r from-gray-700/40 to-gray-900/40 text-gray-100 hover:from-gray-700/60 hover:to-gray-900/60 border border-gray-700/60 shadow-sm shadow-gray-800/30';
-    }
-  };
-
-  const getPriorityColor = (priority?: string) => {
-    switch (priority) {
-      case 'high': return 'bg-gradient-to-r from-red-600/40 to-red-800/40 text-red-200 hover:from-red-600/60 hover:to-red-800/60 border border-red-600/60 shadow-sm shadow-red-700/30';
-      case 'medium': return 'bg-gradient-to-r from-yellow-600/40 to-yellow-800/40 text-yellow-200 hover:from-yellow-600/60 hover:to-yellow-800/60 border border-yellow-600/60 shadow-sm shadow-yellow-700/30';
-      case 'low': return 'bg-gradient-to-r from-green-600/40 to-green-800/40 text-green-200 hover:from-green-600/60 hover:to-green-800/60 border border-green-600/60 shadow-sm shadow-green-700/30';
-      case 'none': return 'bg-gradient-to-r from-gray-600/40 to-gray-800/40 text-gray-200 hover:from-gray-600/60 hover:to-gray-800/60 border border-gray-600/60 shadow-sm shadow-gray-700/30';
-      default: return 'bg-gradient-to-r from-gray-600/40 to-gray-800/40 text-gray-200 hover:from-gray-600/60 hover:to-gray-800/60 border border-gray-600/60 shadow-sm shadow-gray-700/30';
-    }
-  };
-
-  const getTagColor = (category?: string) => {
-    switch (category) {
-      case 'Academic': return 'bg-gradient-to-r from-blue-600/40 to-blue-800/40 text-blue-100 hover:from-blue-600/60 hover:to-blue-800/60 border border-blue-700/60 shadow-sm shadow-blue-700/30';
-      case 'Personal': return 'bg-gradient-to-r from-purple-600/40 to-purple-800/40 text-purple-100 hover:from-purple-600/60 hover:to-purple-800/60 border border-purple-700/60 shadow-sm shadow-purple-700/30';
-      default: return 'bg-gradient-to-r from-gray-600/40 to-gray-800/40 text-gray-100 hover:from-gray-600/60 hover:to-gray-800/60 border border-gray-700/60 shadow-sm shadow-gray-700/30';
-    }
-  };
-
-  const getTitleFontSize = (title: string) => {
-    if (title.length > 30) return 'text-lg md:text-xl';
-    if (title.length > 20) return 'text-xl md:text-2xl';
-    return 'text-2xl md:text-3xl';
-  };
-
-  const shareProject = async () => {
-    if (navigator.share) {
-      try {
-        await navigator.share({
-          title: project.title,
-          text: project.description,
-          url: window.location.href,
-        });
-      } catch (err) {
-        console.log('Error sharing:', err);
-      }
-    } else {
-      navigator.clipboard.writeText(window.location.href);
-      alert('Project URL copied to clipboard!');
-    }
-  };
-
   return (
     <div className="min-h-screen bg-black text-white">
-      {/* Sticky Header */}
-      <motion.div
-        className="sticky top-0 z-20 bg-black/90 backdrop-blur-md border-b border-gray-800/50 py-4"
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-      >
-        <div className="container mx-auto px-8 sm:px-12 md:px-16 lg:px-24">
-          <div className="flex items-center justify-between">
-            <h1 className="text-xl md:text-2xl font-bold truncate">{project.title}</h1>
-            <button
-              onClick={() => navigate(-1)}
-              className="flex items-center gap-2 px-4 py-2 bg-gray-800/50 hover:bg-gray-700/50 rounded-lg transition-all duration-300 border border-gray-700/50"
-            >
-              <ArrowLeft size={20} />
-              <span>Back</span>
-            </button>
-          </div>
-        </div>
-      </motion.div>
+{/* Sticky Header */}
+<motion.div
+  className="sticky top-0 z-20 bg-gradient-to-b from-black/60 to-black/40 backdrop-blur-xl border-b border-white/10 py-4 shadow-lg shadow-black/30 relative overflow-hidden"
+  initial={{ opacity: 0, y: -20 }}
+  animate={{ opacity: 1, y: 0 }}
+  transition={{ duration: 0.5 }}
+>
+  {/* Glass Highlight (subtle reflection at the top) */}
+  <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-white/20 via-white/40 to-white/20 pointer-events-none"></div>
 
-      {/* Hero Section */}
+  <div className="container mx-auto px-4 sm:px-6 md:px-8 lg:px-12 xl:px-24">
+    <div className="flex items-center justify-between">
+      <h1
+        className={`${getTitleFontSize(
+          project.title
+        )} font-bold truncate max-w-[70%] sm:max-w-[80%] md:max-w-[85%] text-white`}
+      >
+        {project.title}
+      </h1>
+      <button
+        onClick={() => navigate(-1)}
+        className="flex items-center gap-2 px-4 py-2 bg-gradient-to-b from-white/10 to-white/5 hover:from-white/20 hover:to-white/10 rounded-lg transition-all duration-300 border border-white/10 backdrop-blur-sm text-white"
+        aria-label="Go back to previous page"
+      >
+        <ArrowLeft size={20} />
+        <span>Back</span>
+      </button>
+    </div>
+  </div>
+</motion.div>
+
+
+      {/* Hero Section with Enhanced Background Image */}
       <div className="relative overflow-hidden">
         {project.image && (
           <div className="absolute inset-0">
             <img 
               src={project.image} 
               alt={project.title}
-              className="w-full h-full object-cover opacity-15"
+              className="w-full h-full object-cover object-top opacity-50 transition-opacity duration-500"
+              loading="lazy"
             />
-            <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/60 to-black"></div>
+            <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/50 to-black"></div>
           </div>
         )}
         
-        <div className="relative z-10 container mx-auto px-8 sm:px-12 md:px-16 lg:px-24 py-24">
+        <div className="relative z-10 container mx-auto px-4 sm:px-6 md:px-8 lg:px-12 xl:px-24 py-16 sm:py-24 md:py-32">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
@@ -369,35 +390,41 @@ const ProjectPage: React.FC = () => {
             <div className="flex flex-wrap items-center gap-3 mb-8">
               {project.status && (
                 <motion.span
-                  className={`px-4 py-2 rounded-full text-sm font-semibold ${getStatusColor(project.status)} transition-colors duration-200`}
+                  className={`px-4 py-2 rounded-full text-sm font-semibold flex items-center gap-2 ${getStatusColor(project.status)} transition-colors duration-200`}
                   whileHover={{ scale: 1.1 }}
                 >
+                  {project.status === 'completed' && <Circle className="w-4 h-4" />}
+                  {project.status === 'in-progress' && <Clock className="w-4 h-4" />}
+                  {project.status === 'planned' && <Target className="w-4 h-4" />}
+                  {project.status === 'n/a' && <Circle className="w-4 h-4" />}
                   {project.status === 'n/a' ? 'N/A' : project.status.replace('-', ' ')}
                 </motion.span>
               )}
               {project.category && (
                 <motion.span
-                  className={`px-4 py-2 rounded-full text-sm font-semibold ${getCategoryColor(project.category)} transition-colors duration-200`}
+                  className={`px-4 py-2 rounded-full text-sm font-semibold flex items-center gap-2 ${getCategoryColor(project.category)} transition-colors duration-200`}
                   whileHover={{ scale: 1.1 }}
                 >
+                  <Layers className="w-4 h-4" />
                   {project.category}
                 </motion.span>
               )}
               {project.priority && project.priority !== 'none' && (
                 <motion.span
-                  className={`px-4 py-2 rounded-full text-sm font-semibold ${getPriorityColor(project.priority)} transition-colors duration-200`}
+                  className={`px-4 py-2 rounded-full text-sm font-semibold flex items-center gap-2 ${getPriorityColor(project.priority)} transition-colors duration-200`}
                   whileHover={{ scale: 1.1 }}
                 >
+                  <Flag className="w-4 h-4" />
                   {project.priority.charAt(0).toUpperCase() + project.priority.slice(1)} Priority
                 </motion.span>
               )}
             </div>
 
-            <h1 className="text-5xl md:text-7xl font-extrabold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-200">
+            <h1 className={`${getTitleFontSize(project.title)} font-extrabold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-200 drop-shadow-lg truncate`}>
               {project.title}
             </h1>
             
-            <p className="text-xl text-gray-300 leading-relaxed mb-10 max-w-3xl">
+            <p className="text-base sm:text-lg md:text-xl text-gray-300 leading-relaxed mb-10 max-w-3xl">
               {project.description}
             </p>
 
@@ -410,6 +437,7 @@ const ProjectPage: React.FC = () => {
                   className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-[#045de9] to-[#09c6f9] rounded-lg hover:shadow-lg hover:shadow-[#045de9]/30 transition-all duration-300"
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
+                  aria-label={`View live demo of ${project.title}`}
                 >
                   <ExternalLink size={20} />
                   <span>Live Demo</span>
@@ -424,6 +452,7 @@ const ProjectPage: React.FC = () => {
                   className="flex items-center gap-2 px-6 py-3 bg-gray-800/50 hover:bg-gray-700/50 rounded-lg transition-all duration-300 border border-gray-700/50"
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
+                  aria-label={`View source code of ${project.title} on GitHub`}
                 >
                   <Github size={20} />
                   <span>View Code</span>
@@ -437,6 +466,8 @@ const ProjectPage: React.FC = () => {
                   }`}
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
+                  aria-label={liked ? `Unlike ${project.title}` : `Like ${project.title}`}
+                  aria-pressed={liked}
                 >
                   <Heart size={20} fill={liked ? 'currentColor' : 'none'} />
                 </motion.button>
@@ -445,6 +476,7 @@ const ProjectPage: React.FC = () => {
                   className="p-3 bg-gray-800/50 hover:bg-gray-700/50 rounded-lg transition-all duration-300"
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
+                  aria-label={`Share ${project.title}`}
                 >
                   <Share2 size={20} />
                 </motion.button>
@@ -455,34 +487,30 @@ const ProjectPage: React.FC = () => {
       </div>
 
       {/* Main Content */}
-      <div className="container mx-auto px-8 sm:px-12 md:px-16 lg:px-24 py-20">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12">
+      <div className="container mx-auto px-4 sm:px-6 md:px-8 lg:px-12 xl:px-24 py-12 sm:py-16 md:py-20">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-12">
           {/* Main Content */}
           <div className="lg:col-span-2 space-y-12">
             {/* Image Gallery */}
             {allImages.length > 0 && (
-              <motion.section
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.3 }}
-                className="space-y-6"
-              >
-                <h2 className="text-3xl font-bold flex items-center gap-3">
+              <ScrollAnimatedSection>
+                <h2 className="text-2xl sm:text-3xl font-bold flex items-center gap-3">
                   <Eye className="text-[#09c6f9]" size={28} />
                   Project Gallery
                 </h2>
                 
                 <div className="relative group">
-                  <div className="relative overflow-hidden rounded-2xl bg-gray-900/50 border border-gray-800/50">
+                  <div className="relative overflow-hidden rounded-2xl bg-gray-900/50 border border-gray-800/50 shadow-lg">
                     <motion.img
                       key={currentImageIndex}
                       src={allImages[currentImageIndex]}
                       alt={`${project.title} - Image ${currentImageIndex + 1}`}
-                      className="w-full h-96 object-cover cursor-pointer transition-transform duration-500 group-hover:scale-105"
+                      className="w-full h-64 sm:h-80 md:h-96 object-cover cursor-pointer transition-transform duration-500 group-hover:scale-105"
                       onClick={() => setIsImageModalOpen(true)}
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
                       transition={{ duration: 0.5 }}
+                      loading="lazy"
                     />
                     
                     {allImages.length > 1 && (
@@ -492,6 +520,7 @@ const ProjectPage: React.FC = () => {
                           className="absolute left-4 top-1/2 transform -translate-y-1/2 p-3 bg-black/60 hover:bg-black/80 rounded-full transition-all duration-300"
                           whileHover={{ scale: 1.1 }}
                           whileTap={{ scale: 0.9 }}
+                          aria-label="Previous image"
                         >
                           <ChevronLeft size={24} />
                         </motion.button>
@@ -500,6 +529,7 @@ const ProjectPage: React.FC = () => {
                           className="absolute right-4 top-1/2 transform -translate-y-1/2 p-3 bg-black/60 hover:bg-black/80 rounded-full transition-all duration-300"
                           whileHover={{ scale: 1.1 }}
                           whileTap={{ scale: 0.9 }}
+                          aria-label="Next image"
                         >
                           <ChevronRight size={24} />
                         </motion.button>
@@ -510,6 +540,8 @@ const ProjectPage: React.FC = () => {
                             className="p-2 bg-black/60 hover:bg-black/80 rounded-full transition-all duration-300"
                             whileHover={{ scale: 1.1 }}
                             whileTap={{ scale: 0.9 }}
+                            aria-label={isAutoPlay ? "Pause autoplay" : "Start autoplay"}
+                            aria-pressed={isAutoPlay}
                           >
                             {isAutoPlay ? <Pause size={16} /> : <Play size={16} />}
                           </motion.button>
@@ -518,13 +550,13 @@ const ProjectPage: React.FC = () => {
                             className="p-2 bg-black/60 hover:bg-black/80 rounded-full transition-all duration-300"
                             whileHover={{ scale: 1.1 }}
                             whileTap={{ scale: 0.9 }}
+                            aria-label="Reset to first image"
                           >
                             <RotateCcw size={16} />
                           </motion.button>
                         </div>
-                    </>
+                      </>
                     )}
-                    
                     <div className="absolute bottom-4 left-4 px-3 py-1 bg-black/60 rounded-full text-sm font-medium">
                       {currentImageIndex + 1} / {allImages.length}
                     </div>
@@ -536,55 +568,47 @@ const ProjectPage: React.FC = () => {
                         <motion.button
                           key={index}
                           onClick={() => setCurrentImageIndex(index)}
-                          className={`flex-shrink-0 w-20 h-20 rounded-lg overflow-hidden border-2 transition-all duration-300 ${
+                          className={`flex-shrink-0 w-16 sm:w-20 h-16 sm:h-20 rounded-lg overflow-hidden border-2 transition-all duration-300 ${
                             index === currentImageIndex 
                               ? 'border-[#09c6f9] scale-105' 
                               : 'border-gray-700 hover:border-gray-500'
                           }`}
                           whileHover={{ scale: 1.05 }}
+                          aria-label={`Select thumbnail ${index + 1}`}
                         >
                           <img
                             src={image}
-                            alt={`Thumbnail ${index + 1}`}
+                            alt={`Thumbnail ${index + 1} for ${project.title}`}
                             className="w-full h-full object-cover"
+                            loading="lazy"
                           />
                         </motion.button>
                       ))}
                     </div>
                   )}
                 </div>
-              </motion.section>
+              </ScrollAnimatedSection>
             )}
 
             {/* Detailed Description */}
             {project.longDescription && (
-              <motion.section
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.4 }}
-                className="space-y-6"
-              >
-                <h2 className="text-3xl font-bold flex items-center gap-3">
+              <ScrollAnimatedSection>
+                <h2 className="text-2xl sm:text-3xl font-bold flex items-center gap-3">
                   <Target className="text-[#09c6f9]" size={28} />
                   Project Overview
                 </h2>
-                <div className="bg-gray-900/50 rounded-2xl p-8 border border-gray-800/50">
-                  <p className="text-gray-300 leading-relaxed text-lg whitespace-pre-line">
+                <div className="bg-gray-900/50 rounded-2xl p-6 sm:p-8 border border-gray-800/50">
+                  <p className="text-gray-300 leading-relaxed text-base sm:text-lg whitespace-pre-line">
                     {project.longDescription}
                   </p>
                 </div>
-              </motion.section>
+              </ScrollAnimatedSection>
             )}
 
             {/* Features */}
             {project.features && project.features.length > 0 && (
-              <motion.section
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.5 }}
-                className="space-y-6"
-              >
-                <h2 className="text-3xl font-bold flex items-center gap-3">
+              <ScrollAnimatedSection>
+                <h2 className="text-2xl sm:text-3xl font-bold flex items-center gap-3">
                   <Zap className="text-[#09c6f9]" size={28} />
                   Key Features
                 </h2>
@@ -602,18 +626,13 @@ const ProjectPage: React.FC = () => {
                     </motion.div>
                   ))}
                 </div>
-              </motion.section>
+              </ScrollAnimatedSection>
             )}
 
             {/* Technologies */}
             {project.technologies && project.technologies.length > 0 && (
-              <motion.section
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.6 }}
-                className="space-y-6"
-              >
-                <h2 className="text-3xl font-bold flex items-center gap-3">
+              <ScrollAnimatedSection>
+                <h2 className="text-2xl sm:text-3xl font-bold flex items-center gap-3">
                   <Layers className="text-[#09c6f9]" size={28} />
                   Technologies Used
                 </h2>
@@ -631,18 +650,13 @@ const ProjectPage: React.FC = () => {
                     </motion.div>
                   ))}
                 </div>
-              </motion.section>
+              </ScrollAnimatedSection>
             )}
 
             {/* Challenges & Solutions */}
             {project.challenges && project.challenges.length > 0 && (
-              <motion.section
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.7 }}
-                className="space-y-6"
-              >
-                <h2 className="text-3xl font-bold flex items-center gap-3">
+              <ScrollAnimatedSection>
+                <h2 className="text-2xl sm:text-3xl font-bold flex items-center gap-3">
                   <Lightbulb className="text-[#09c6f9]" size={28} />
                   Challenges & Solutions
                 </h2>
@@ -664,18 +678,13 @@ const ProjectPage: React.FC = () => {
                     </motion.div>
                   ))}
                 </div>
-              </motion.section>
+              </ScrollAnimatedSection>
             )}
 
             {/* Outcomes & Results */}
             {project.outcomes && project.outcomes.length > 0 && (
-              <motion.section
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.8 }}
-                className="space-y-6"
-              >
-                <h2 className="text-3xl font-bold flex items-center gap-3">
+              <ScrollAnimatedSection>
+                <h2 className="text-2xl sm:text-3xl font-bold flex items-center gap-3">
                   <Award className="text-[#09c6f9]" size={28} />
                   Outcomes & Results
                 </h2>
@@ -695,18 +704,13 @@ const ProjectPage: React.FC = () => {
                     </motion.div>
                   ))}
                 </div>
-              </motion.section>
+              </ScrollAnimatedSection>
             )}
 
             {/* Related Projects */}
             {relatedProjects.length > 0 && (
-              <motion.section
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.9 }}
-                className="space-y-6"
-              >
-                <h2 className="text-3xl font-bold flex items-center gap-3">
+              <ScrollAnimatedSection>
+                <h2 className="text-2xl sm:text-3xl font-bold flex items-center gap-3">
                   <Layers className="text-[#09c6f9]" size={28} />
                   Related Projects
                 </h2>
@@ -747,17 +751,22 @@ const ProjectPage: React.FC = () => {
                           <div className="absolute top-3 left-3 flex items-center gap-2 flex-wrap">
                             {relatedProject.status && (
                               <motion.span
-                                className={`px-3 py-1 rounded-full text-xs font-semibold ${getStatusColor(relatedProject.status)} transition-colors duration-200`}
+                                className={`px-3 py-1 rounded-full text-xs font-semibold flex items-center gap-2 ${getStatusColor(relatedProject.status)} transition-colors duration-200`}
                                 whileHover={{ scale: 1.1 }}
                               >
+                                {relatedProject.status === 'completed' && <Circle className="w-3 h-3" />}
+                                {relatedProject.status === 'in-progress' && <Clock className="w-3 h-3" />}
+                                {relatedProject.status === 'planned' && <Target className="w-3 h-3" />}
+                                {relatedProject.status === 'n/a' && <Circle className="w-3 h-3" />}
                                 {relatedProject.status === 'n/a' ? 'N/A' : relatedProject.status.replace('-', ' ')}
                               </motion.span>
                             )}
                             {relatedProject.category && (
                               <motion.span
-                                className={`px-3 py-1 rounded-full text-xs font-semibold ${getCategoryColor(relatedProject.category)} transition-colors duration-200`}
+                                className={`px-3 py-1 rounded-full text-xs font-semibold flex items-center gap-2 ${getCategoryColor(relatedProject.category)} transition-colors duration-200`}
                                 whileHover={{ scale: 1.1 }}
                               >
+                                <Layers className="w-3 h-3" />
                                 {relatedProject.category}
                               </motion.span>
                             )}
@@ -772,8 +781,9 @@ const ProjectPage: React.FC = () => {
                             {relatedProject.tags.slice(0, 3).map((tag, i) => (
                               <motion.span
                                 key={i}
-                                className={`text-xs font-medium ${getTagColor(relatedProject.category)} px-2 py-1 rounded-full transition-colors duration-200`}
+                                className={`text-xs font-medium ${getTagColor(tag)} px-2 py-1 rounded-full transition-colors duration-200`}
                                 whileHover={{ scale: 1.1 }}
+                                aria-label={`Tag: ${tag}`}
                               >
                                 {tag}
                               </motion.span>
@@ -796,7 +806,7 @@ const ProjectPage: React.FC = () => {
                     </motion.div>
                   ))}
                 </div>
-              </motion.section>
+              </ScrollAnimatedSection>
             )}
           </div>
 
@@ -808,15 +818,16 @@ const ProjectPage: React.FC = () => {
             className="lg:col-span-1 space-y-8"
           >
             <div className="bg-gray-900/50 rounded-2xl p-6 border border-gray-800/50 sticky top-24">
-              <h3 className="text-xl font-bold mb-6">Project Details</h3>
+              <h3 className="text-lg sm:text-xl font-bold mb-6">Project Details</h3>
               
               <div className="space-y-6">
                 {project.startDate && (
                   <div className="flex items-center gap-3">
                     <Calendar className="text-[#09c6f9]" size={20} />
-                    <div>
+                    <div className="w-full">
                       <div className="text-sm text-gray-400">Duration</div>
-                      <div className="text-white font-medium">{project.startDate} - {project.endDate || 'Present'}</div>
+                      <div className="text-white font-medium mb-2">{project.startDate} - {project.endDate || 'Present'}</div>
+                      <Timeline startDate={project.startDate} endDate={project.endDate} />
                     </div>
                   </div>
                 )}
@@ -844,7 +855,7 @@ const ProjectPage: React.FC = () => {
 
               {project.keyMetrics && project.keyMetrics.length > 0 && (
                 <div className="mt-8 pt-6 border-t border-gray-800/50">
-                  <h4 className="text-lg font-semibold mb-4 flex items-center gap-2">
+                  <h4 className="text-base sm:text-lg font-semibold mb-4 flex items-center gap-2">
                     <TrendingUp className="text-[#09c6f9]" size={20} />
                     Key Metrics
                   </h4>
@@ -861,13 +872,15 @@ const ProjectPage: React.FC = () => {
 
               {project.tags.length > 0 && (
                 <div className="mt-8 pt-6 border-t border-gray-800/50">
-                  <h4 className="text-lg font-semibold mb-4">Technologies</h4>
+                  <h4 className="text-base sm:text-lg font-semibold mb-4">Tags</h4>
                   <div className="flex flex-wrap gap-2">
                     {project.tags.map((tag, index) => (
                       <motion.span
                         key={index}
-                        className={`px-3 py-1.5 rounded-full text-sm font-medium ${getCategoryColor(project.category)} transition-colors duration-200`}
+                        className={`px-3 py-1.5 rounded-full text-sm font-medium ${getTagColor(tag)} transition-colors duration-200 cursor-pointer`}
                         whileHover={{ scale: 1.1 }}
+                        title={`Projects with tag: ${tag}`}
+                        aria-label={`Tag: ${tag}`}
                       >
                         {tag}
                       </motion.span>
@@ -887,7 +900,7 @@ const ProjectPage: React.FC = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-black/90 backdrop-blur-sm z-50 flex items-center justify-center p-6"
+            className="fixed inset-0 bg-black/90 backdrop-blur-sm z-50 flex items-center justify-center p-4 sm:p-6"
             onClick={() => setIsImageModalOpen(false)}
           >
             <motion.div
@@ -900,11 +913,12 @@ const ProjectPage: React.FC = () => {
               <motion.img
                 key={currentImageIndex}
                 src={allImages[currentImageIndex]}
-                alt={`${project.title} - Full size`}
-                className="max-w-full max-h-[90vh] object-contain rounded-lg"
+                alt={`${project.title} - Full size image ${currentImageIndex + 1}`}
+                className="max-w-full max-h-[90vh] object-contain rounded-lg shadow-2xl"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.5 }}
+                loading="lazy"
               />
               
               <motion.button
@@ -912,6 +926,7 @@ const ProjectPage: React.FC = () => {
                 className="absolute top-4 right-4 p-3 bg-black/60 hover:bg-black/80 rounded-full transition-all duration-300"
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
+                aria-label="Close modal"
               >
                 <X size={24} />
               </motion.button>
@@ -923,6 +938,7 @@ const ProjectPage: React.FC = () => {
                     className="absolute left-4 top-1/2 transform -translate-y-1/2 p-3 bg-black/60 hover:bg-black/80 rounded-full transition-all duration-300"
                     whileHover={{ scale: 1.1 }}
                     whileTap={{ scale: 0.9 }}
+                    aria-label="Previous image in modal"
                   >
                     <ChevronLeft size={24} />
                   </motion.button>
@@ -931,6 +947,7 @@ const ProjectPage: React.FC = () => {
                     className="absolute right-4 top-1/2 transform -translate-y-1/2 p-3 bg-black/60 hover:bg-black/80 rounded-full transition-all duration-300"
                     whileHover={{ scale: 1.1 }}
                     whileTap={{ scale: 0.9 }}
+                    aria-label="Next image in modal"
                   >
                     <ChevronRight size={24} />
                   </motion.button>
@@ -947,5 +964,43 @@ const ProjectPage: React.FC = () => {
     </div>
   );
 };
+
+// Scroll Animated Section Component
+const ScrollAnimatedSection: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const { ref, inView } = useInView({
+    triggerOnce: true,
+    threshold: 0.1,
+  });
+
+  return (
+    <motion.section
+      ref={ref}
+      initial={{ opacity: 0, y: 50 }}
+      animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
+      transition={{ duration: 0.6, ease: 'easeOut' }}
+      className="space-y-6"
+    >
+      {children}
+    </motion.section>
+  );
+};
+
+// Timeline Component
+const Timeline: React.FC<{ startDate: string; endDate?: string }> = ({ startDate, endDate }) => (
+  <div className="relative">
+    <div className="h-2 bg-gray-800/50 rounded-full">
+      <motion.div
+        className="h-2 bg-gradient-to-r from-[#045de9] to-[#09c6f9] rounded-full"
+        initial={{ width: 0 }}
+        animate={{ width: endDate ? '100%' : '50%' }}
+        transition={{ duration: 1, ease: 'easeInOut' }}
+      />
+    </div>
+    <div className="flex justify-between mt-2 text-sm text-gray-300">
+      <span>{startDate}</span>
+      <span>{endDate || 'Ongoing'}</span>
+    </div>
+  </div>
+);
 
 export default ProjectPage;
