@@ -17,7 +17,7 @@
 ---
 
 ### 🤝 Connect With Me  
-[LinkedIn](https://www.linkedin.com/in/naveen-yn/]) · [Portfolio]([https://naveenyn.dev](https://naveen.neuropia.tech/))  
+[LinkedIn]([https://www.linkedin.com/in/naveen-yn/]) · [Portfolio]([https://naveen.neuropia.tech/])  
 
 ---
 
