@@ -37,9 +37,15 @@ const AnimatedCursor: React.FC = () => {
 
   const [particles, setParticles] = useState<Particle[]>([]);
   const particlesRef = useRef<Particle[]>([]);
-  const isMobile = useRef(false);
   const hoverActive = useRef(false);
   const hoveredElement = useRef<HTMLElement | null>(null);
+
+  const isMobile =
+    typeof window !== "undefined" &&
+    ("ontouchstart" in window || navigator.maxTouchPoints > 0);
+
+  // ✅ Don’t render anything on mobile
+  if (isMobile) return null;
 
   const addParticle = (x: number, y: number, count = 1) => {
     const newParticles = Array.from({ length: count }, () => ({
@@ -57,7 +63,9 @@ const AnimatedCursor: React.FC = () => {
       pulse: Math.random() * 0.3 + 0.7,
       pulseDir: Math.random() < 0.5 ? -1 : 1,
     }));
-    particlesRef.current = [...particlesRef.current, ...newParticles].slice(-MAX_PARTICLES);
+    particlesRef.current = [...particlesRef.current, ...newParticles].slice(
+      -MAX_PARTICLES
+    );
     setParticles([...particlesRef.current]);
   };
 
@@ -68,33 +76,21 @@ const AnimatedCursor: React.FC = () => {
       hoveredElement.current = hoverActive.current ? element : null;
     };
 
-    const handleMove = (e: MouseEvent | Touch) => {
+    const handleMove = (e: MouseEvent) => {
       mouseX.set(e.clientX);
       mouseY.set(e.clientY);
       updateHoverState(e.clientX, e.clientY);
       addParticle(e.clientX, e.clientY);
     };
 
-    const handleClick = (e: MouseEvent | Touch) => addParticle(e.clientX, e.clientY, 8);
+    const handleClick = (e: MouseEvent) => addParticle(e.clientX, e.clientY, 8);
 
-    isMobile.current = "ontouchstart" in window || navigator.maxTouchPoints > 0;
-
-    if (!isMobile.current) {
-      window.addEventListener("mousemove", handleMove as any);
-      window.addEventListener("click", handleClick as any);
-    } else {
-      window.addEventListener("touchmove", (e) => handleMove(e.touches[0]));
-      window.addEventListener("touchstart", (e) => {
-        handleMove(e.touches[0]);
-        handleClick(e.touches[0]);
-      });
-    }
+    window.addEventListener("mousemove", handleMove);
+    window.addEventListener("click", handleClick);
 
     return () => {
-      if (!isMobile.current) {
-        window.removeEventListener("mousemove", handleMove as any);
-        window.removeEventListener("click", handleClick as any);
-      }
+      window.removeEventListener("mousemove", handleMove);
+      window.removeEventListener("click", handleClick);
     };
   }, [mouseX, mouseY]);
 
@@ -140,6 +136,7 @@ const AnimatedCursor: React.FC = () => {
 
   return (
     <>
+      {/* Connecting lines */}
       <svg
         style={{
           position: "fixed",
@@ -175,6 +172,7 @@ const AnimatedCursor: React.FC = () => {
         )}
       </svg>
 
+      {/* Particles */}
       {particles.map((p) => {
         const sparkle = Math.random() < 0.02;
         const size = sparkle ? p.size * 1.5 : p.size;
@@ -197,9 +195,8 @@ const AnimatedCursor: React.FC = () => {
               transform: `translate(-50%, -50%) rotate(${p.angle}deg)`,
               zIndex: 9999,
               mixBlendMode: "screen",
-              boxShadow: `0 0 ${sparkle ? 12 : 8}px ${COLORS[p.colorIndex]}, 0 0 ${
-                sparkle ? 24 : 16
-              }px ${COLORS[p.colorIndex]}`,
+              boxShadow: `0 0 ${sparkle ? 12 : 8}px ${COLORS[p.colorIndex]}, 
+                          0 0 ${sparkle ? 24 : 16}px ${COLORS[p.colorIndex]}`,
             }}
           />
         );
