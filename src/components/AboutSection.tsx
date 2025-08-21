@@ -36,16 +36,15 @@ const AboutSection: React.FC = () => {
   const [displayedTagline, setDisplayedTagline] = useState("");
   const aboutMeData: AboutMeData = {
     profilePicture: "", // Add image URL here
-    tagline: "Aspiring Software Engineer | AI & ML Enthusiast",
+    tagline: "Aspiring Software Engineer | Fresher",
     location: "Hyderabad, Telangana, India",
-    bio: "I’m a recent Computer Science and Engineering graduate (2025) with a specialization in AI and Machine Learning. I have a solid understanding of core programming concepts, particularly in C++ and Python, and strong problem-solving skills grounded in data structures and algorithms. I'm comfortable working with both frontend and backend technologies, cloud tools, and Linux-based systems. I enjoy building scalable, efficient solutions and learning new technologies along the way. I’m looking for an opportunity where I can contribute meaningfully, keep learning, and grow as a software engineer in a collaborative environment.",
+    bio: "I am a recent Computer Science and Engineering graduate of 2025 specializing in Artificial Intelligence and Machine Learning, equipped with a robust foundation in programming fundamentals and hands-on, self-taught proficiency in full-stack development, cloud computing, and real-time application design. With a strong drive for innovation and a dedication to mastering emerging technologies, I am eager to join a dynamic team, applying my skills to create advanced systems software and AI-driven solutions in a collaborative, inclusive setting.",
     socialLinks: [
-      { platform: "GitHub", url: "https://github.com/naveenyanamadala", icon: "Github" },
-      { platform: "LinkedIn", url: "https://linkedin.com/in/naveenyanamadala", icon: "Linkedin" },
-      { platform: "Twitter", url: "https://twitter.com/naveenyan", icon: "Twitter" },
+      { platform: "GitHub", url: "https://github.com/Naveen-YN", icon: "Github" },
+      { platform: "LinkedIn", url: "https://www.linkedin.com/in/naveen-yn/", icon: "Linkedin" },
     ],
-    resumeUrl: "https://example.com/naveen_resume.pdf", // Add actual resume URL
-    email: "mailto:naveen@example.com", // Add actual email
+    resumeUrl: "https://neuropia.s3.ap-south-1.amazonaws.com/Naveen-Yanamadala-Resume.pdf", 
+    email: "mailto:naveenyd06@gmail.com", 
   };
 
   // 🔹 Key Highlights

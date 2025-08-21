@@ -65,7 +65,7 @@ const projects: Project[] = [
     slug: 'portfolio',
     description: 'My personal portfolio website showcasing projects and skills.',
     image: 'https://cdn.dribbble.com/users/149571/screenshots/4819891/media/74a587970b8849c7a23b36113b52ed71.gif',
-    tags: ['Portfolio', 'React', 'Vue', 'TypeScript', 'MongoDB'],
+    tags: ['Portfolio', 'React', 'Vue', 'TypeScript'],
     longDescription: 'This portfolio is a dynamic and interactive platform built to showcase my journey, skills, and projects. Developed with a keen eye for design and user experience, it serves as a central hub for my professional and personal work. The site is fully responsive, ensuring a seamless experience across all devices, from desktops to mobile phones.',
     features: ['Responsive Design', 'Dynamic Project Filtering', 'Interactive UI/UX', 'Contact Form Integration'],
     technologies: ['React', 'TypeScript', 'Framer Motion', 'Tailwind CSS', 'Vite'],

@@ -31,7 +31,7 @@ const HeroSection: React.FC = () => {
   // Typing animation with loop
   useEffect(() => {
     const currentPhrase = phrases[phraseIndex];
-    let timeout: NodeJS.Timeout;
+    let timeout: ReturnType<typeof setTimeout>;
 
     if (!deleting && typedText.length < currentPhrase.length) {
       timeout = setTimeout(() => {
@@ -52,7 +52,7 @@ const HeroSection: React.FC = () => {
   }, [typedText, deleting, phraseIndex, phrases]);
 
   const resumeUrl =
-    "https://novark.s3.ap-south-1.amazonaws.com/Naveen-Yanamadala-Resume-1.pdf";
+    "https://neuropia.s3.ap-south-1.amazonaws.com/Naveen-Yanamadala-Resume.pdf";
 
   return (
     <section

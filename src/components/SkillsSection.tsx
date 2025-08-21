@@ -98,12 +98,12 @@ const customSkills: Skill[] = [
   { name: "Git", category: "Version Control", icon: "FaGitAlt" },
   { name: "GitHub", category: "Version Control", icon: "SiGithub" },
 
-  // AI & Machine Learning
-  { name: "TensorFlow", category: "AI & Machine Learning", icon: "SiTensorflow" },
-  { name: "Keras", category: "AI & Machine Learning", icon: "SiKeras" },
-  { name: "OpenCV", category: "AI & Machine Learning", icon: "SiOpencv" },
-  { name: "MediaPipe", category: "AI & Machine Learning", icon: "SiGoogle" },
-  { name: "PyQt5", category: "AI & Machine Learning", icon: "SiQt" }, // Used in AI project
+  // // AI & Machine Learning
+  // { name: "TensorFlow", category: "AI & Machine Learning", icon: "SiTensorflow" },
+  // { name: "Keras", category: "AI & Machine Learning", icon: "SiKeras" },
+  // { name: "OpenCV", category: "AI & Machine Learning", icon: "SiOpencv" },
+  // { name: "MediaPipe", category: "AI & Machine Learning", icon: "SiGoogle" },
+  // { name: "PyQt5", category: "AI & Machine Learning", icon: "SiQt" }, // Used in AI project
 
   // Conceptual Knowledge
   { name: "AI", category: "Conceptual Knowledge", icon: "SiTensorflow" },

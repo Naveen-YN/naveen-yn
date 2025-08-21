@@ -2,7 +2,6 @@ import React, { useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FaGithub, FaExternalLinkAlt, FaCalendarAlt, FaUsers } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
-
 // Base64-encoded placeholder image (a generic project thumbnail)
 const placeholderImage = 'https://wallpapercave.com/wp/wp3006133.jpg';
 
@@ -32,8 +31,8 @@ const projects: Project[] = [
     id: '1',
     title: 'Portfolio',
     description: 'My personal portfolio website showcasing projects and skills.',
-    image: placeholderImage,
-    tags: ['Portfolio', 'React', 'Vue', 'TypeScript', 'MongoDB'],
+    image: 'https://neuropia.s3.ap-south-1.amazonaws.com/project-img/portfolio.gif',
+    tags: ['Portfolio', 'React', 'Vue', 'TypeScript'],
     slug: 'portfolio',
     longDescription: 'My personal portfolio website showcasing my projects and skills.',
     features: [
@@ -50,15 +49,15 @@ const projects: Project[] = [
     role: 'Full Stack Developer',
     startDate: '2025-08-17',
     endDate: '2025-08-25',
-    link: '',
-    liveDemo: '',
+    link: 'https://github.com/Naveen-YN/naveen-yn',
+    liveDemo: 'https://naveen.neuropia.tech/',
   },
   {
     id: '2',
     title: 'GestureFlow: An Advanced Hand Gesture Control System',
     description: 'A real-time hand gesture control application for contactless interaction.',
-    image: placeholderImage,
-    tags: ['Python', 'Computer Vision', 'AI', 'OpenCV', 'MediaPipe'],
+    image: 'https://neuropia.s3.ap-south-1.amazonaws.com/project-img/gesture.png',
+    tags: ['Python', 'Computer Vision', 'AI', 'OpenCV'],
     slug: 'gestureflow',
     longDescription: 'Built a real-time hand gesture control application using MediaPipe and OpenCV...',
     features: [
@@ -70,20 +69,20 @@ const projects: Project[] = [
     technologies: ['Python', 'OpenCV', 'MediaPipe', 'pynput', 'pyautogui'],
     status: 'completed',
     category: 'Academic',
-    priority: 'medium',
-    teamSize: 1,
-    role: 'Developer',
-    startDate: '2024-12',
-    endDate: '2025-04',
+    priority: 'none',
+    teamSize: 5,
+    role: 'Developer and Team Lead',
+    startDate: '2025-April',
+    endDate: '2024-December',
     link: 'https://github.com/Naveen-YN/GestureFlow-An-Advanced-Hand-Gesture-Control-System',
     liveDemo: '',
   },
   {
     id: '3',
-    title: 'Potato Leaf Disease Identification using DL',
+    title: 'Potato Leaf Disease Identification using Deep learning',
     description: 'A deep learning application for identifying diseases in potato leaves.',
-    image: placeholderImage,
-    tags: ['Python', 'Deep Learning', 'Computer Vision', 'TensorFlow', 'Keras'],
+    image: 'https://neuropia.s3.ap-south-1.amazonaws.com/project-img/potato.jpg',
+    tags: ['Deep Learning', 'Computer Vision', 'TensorFlow', ],
     slug: 'potato-leaf-disease',
     longDescription: 'Built a robust disease identification application for potato crops using a ResNet50 model...',
     features: [
@@ -92,7 +91,7 @@ const projects: Project[] = [
       'User-friendly interface with PyQt5',
       'Real-time predictions and insights'
     ],
-    technologies: ['Python', 'TensorFlow', 'Keras', 'ResNet50', 'OpenCV', 'PyQt5'],
+    technologies: ['Python', 'TensorFlow', 'Keras', 'ResNet50'],
     status: 'completed',
     category: 'Academic',
     priority: 'none',
@@ -105,10 +104,10 @@ const projects: Project[] = [
   },
   {
     id: '4',
-    title: 'Brain Tumor and Lung Disease Detection',
+    title: 'Brain Tumor and Lung Disease Detection using Deep Learning',
     description: 'AI-based medical image classification for brain tumor and lung disease diagnosis.',
-    image: placeholderImage,
-    tags: ['Python', 'Deep Learning', 'TensorFlow', 'CNN', 'Medical AI'],
+    image: `https://neuropia.s3.ap-south-1.amazonaws.com/project-img/brain-lung.jpg`,
+    tags: ['Python', 'Deep Learning', 'TensorFlow'],
     slug: 'brain-tumor-lung-disease',
     longDescription: 'Developed deep learning models to detect brain tumors and lung diseases using medical imaging datasets...',
     features: ['CNN-based detection', 'Medical dataset training', 'High diagnostic accuracy'],
@@ -127,7 +126,7 @@ const projects: Project[] = [
     id: '5',
     title: 'Virtual Healthcare Companion Chatbot',
     description: 'A full-stack AI-powered chatbot for healthcare queries with NLTK and Gemini API.',
-    image: placeholderImage,
+    image: 'https://neuropia.s3.ap-south-1.amazonaws.com/project-img/healthcare.jpg',
     tags: ['Python', 'Django', 'NLTK', 'NLP', 'Gradio', 'Gemini API'],
     slug: 'healthcare-chatbot',
     longDescription: 'Built an interactive chatbot that answers medical queries using NLP with NLTK and full-stack Django backend...',
@@ -145,10 +144,10 @@ const projects: Project[] = [
   },
   {
     id: '6',
-    title: 'Image Classification on CIFAR-10',
+    title: 'Image Classification using CIFAR-10 Dataset',
     description: 'Deep learning image classification project with GUI using PyQt5 and TensorFlow.',
-    image: placeholderImage,
-    tags: ['Python', 'Deep Learning', 'PyQt5', 'TensorFlow', 'CIFAR-10'],
+    image: 'https://neuropia.s3.ap-south-1.amazonaws.com/project-img/img-classifi.jpg',
+    tags: ['Python', 'Deep Learning', 'TensorFlow'],
     slug: 'cifar10-classification',
     longDescription: 'Implemented CNNs to classify CIFAR-10 dataset images, with PyQt5 GUI for easy inference...',
     features: ['CNN training on CIFAR-10', 'PyQt5 GUI', 'Real-time classification'],
@@ -157,7 +156,7 @@ const projects: Project[] = [
     category: 'Academic',
     priority: 'none',
     teamSize: 1,
-    role: 'Developer',
+    role: 'Contributor and Developer',
     startDate: '2023-04',
     endDate: '2023-08',
     link: 'https://github.com/Naveen-YN/Image-Classification-Using-Deep-Learning-Techniques-on-the-CIFAR-10',
