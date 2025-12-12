@@ -14,8 +14,7 @@ import CodingProfilesSection from "./components/CodingProfilesSection"
 import ContactSection from "./components/ContactSection"
 import ProjectPage from "./pages/ProjectPage"
 import ResumeRedirect from "./components/ResumeRedirect"
-// --- IMPORT THE NEW NOTIFICATION COMPONENT ---
-import MaintenanceNotification from "./components/MaintenanceNotification"
+// import MaintenanceNotification from "./components/MaintenanceNotification"
 import AnimatedCursor from "./components/AnimatedCursor";
 
 import "./App.css"
@@ -136,7 +135,7 @@ function App() {
         <Route path="/resume" element={<ResumeRedirect />} />
         <Route path="/project/:slug" element={<ProjectPage />} />
       </Routes>
-            <MaintenanceNotification />
+            {/* <MaintenanceNotification /> */}
                   <AnimatedCursor />
 
     </>
