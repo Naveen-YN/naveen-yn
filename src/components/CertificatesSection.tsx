@@ -62,18 +62,18 @@ const CertificatesSection: React.FC = () => {
     },
     {
       id: "2",
-      title: "",
-      issuer: "",
+      title: "Data Analysis with Python",
+      issuer: "Coursera - IBM",
       description:
         "",
-      issueDate: "",
+      issueDate: "May 25, 2023",
       expiryDate: "",
-      credentialUrl: "",
+      credentialUrl: "https://www.coursera.org/account/accomplishments/verify/33HMWDUZ5GM7",
       image:
-        "",
-      category: "",
-      skills: [],
-      verified: false,
+        "https://neuropia.s3.ap-south-1.amazonaws.com/certificates/1.jpg",
+      category: "Technical",
+      skills: ["Data Analysis", "Data Pipelines", "Exploratory Data Analysis"],
+      verified: true,
     },
   ];
 
