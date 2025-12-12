@@ -10,12 +10,11 @@ import {
   FaBook,
   FaTimes,
   FaLaptopCode,
-  FaBrain,
   FaCertificate,
   FaTrophy
 } from "react-icons/fa";
 
-// Particle Background (unchanged - optimized)
+// Particle Background (optimized)
 const ParticleBackground = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
@@ -76,7 +75,7 @@ const ParticleBackground = () => {
   return <canvas ref={canvasRef} className="absolute inset-0 w-full h-full -z-10" />;
 };
 
-// Enhanced Education Data with Detailed Content
+// Enhanced Education Data
 const educationData = [
   {
     id: '1',
@@ -212,13 +211,13 @@ const EducationSection = () => {
                   viewport={{ once: true }}
                   transition={{ duration: 0.6, delay: index * 0.2 }}
                   className="group relative"
-                >
-OnHover={() => setSelectedEdu(edu)}
+                  onHoverStart={() => setSelectedEdu(edu)}
+                  onHoverEnd={() => setSelectedEdu(null)}
+                  onClick={() => setSelectedEdu(edu)}
                 >
                   <motion.div
                     whileHover={{ y: -10, scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
-                    onClick={() => setSelectedEdu(edu)}
                     className={`relative bg-black/90 backdrop-blur-2xl p-8 rounded-3xl border ${color.border} ${color.glow} shadow-2xl cursor-pointer transition-all duration-500 hover:shadow-2xl hover:shadow-${color.glow.split('/')[0]}`}
                   >
                     <div className="flex flex-col lg:flex-row gap-8 items-center lg:items-start">
@@ -263,7 +262,7 @@ OnHover={() => setSelectedEdu(edu)}
         </div>
       </section>
 
-      {/* Enhanced Modal / Popover */}
+      {/* Modal */}
       <AnimatePresence>
         {selectedEdu && (
           <>
@@ -315,7 +314,7 @@ OnHover={() => setSelectedEdu(edu)}
                         <div className="grid md:grid-cols-2 gap-8">
                           <div>
                             <h3 className="text-2xl font-bold mb-4 flex items-center gap-3">
-                              <FaBrain className="text-cyan-400" /> Overview
+                              <FaLaptopCode className="text-cyan-400" /> Overview
                             </h3>
                             <p className="text-gray-300 leading-relaxed">{selectedEdu.details.description}</p>
                           </div>
