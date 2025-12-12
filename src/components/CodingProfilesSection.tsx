@@ -30,20 +30,6 @@ const codingProfiles: CodingProfile[] = [
   },
   {
     id: "2",
-    name: "LinkedIn",
-    icon: "FaLinkedin",
-    link: "https://www.linkedin.com/in/Naveen-YN",
-    isActive: true,
-  },
-  {
-    id: "3",
-    name: "Portfolio",
-    icon: "FaGlobe",
-    link: "https://naveen.neuropia.tech/",
-    isActive: true,
-  },
-  {
-    id: "4",
     name: "LeetCode",
     icon: "FaCode",
     link: "https://leetcode.com/u/naveen_yn", // Placeholder; replace with actual LeetCode URL
