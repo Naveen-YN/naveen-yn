@@ -52,7 +52,7 @@ const AboutSection: React.FC = () => {
     {
       id: 1,
       title: "Strong Problem Solving",
-      description: "Skilled in Data Structures and Algorithms with C++ and Python.",
+      description: "Good at logical thinking and Python-based problem solving. Currently improving my DSA skills.",
       icon: "Code",
       isActive: true,
     },
@@ -69,12 +69,11 @@ const AboutSection: React.FC = () => {
   const additionalHighlights: Highlight[] = [
     {
       id: 1,
-      title: "Strong Problem Solving",
-      description: "Good at logical thinking and Python-based problem solving. Currently improving my DSA skills.",
-      icon: "Code",
+      title: "Career Goal",
+      description: "Eager to contribute in a collaborative environment and grow as a software engineer.",
+      icon: "Target",
       isActive: true,
     },
-
     {
       id: 2,
       title: "Continuous Learner",
