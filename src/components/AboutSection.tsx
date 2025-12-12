@@ -69,11 +69,12 @@ const AboutSection: React.FC = () => {
   const additionalHighlights: Highlight[] = [
     {
       id: 1,
-      title: "Career Goal",
-      description: "Eager to contribute in a collaborative environment and grow as a software engineer.",
-      icon: "Target",
+      title: "Strong Problem Solving",
+      description: "Good at logical thinking and Python-based problem solving. Currently improving my DSA skills.",
+      icon: "Code",
       isActive: true,
     },
+
     {
       id: 2,
       title: "Continuous Learner",
