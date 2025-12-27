@@ -16,14 +16,7 @@
 
 ---
 
-### 🤝 Connect With Me  
+### ♾️ Connect With Me  
 [LinkedIn]([https://www.linkedin.com/in/naveen-yn/]) · [Portfolio]([https://naveen.neuropia.tech/])  
-
----
-
-### 📊 GitHub Stats  
-<p align="center">
-  <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=Naveen-YN&layout=compact&theme=transparent" height="160"/>
-</p>
 
 ---
