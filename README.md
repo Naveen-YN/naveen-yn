@@ -1,4 +1,4 @@
-# 👋 Hi, I'm Naveen YN  
+# 👋 Hi, I'm Naveen Yanamadala
 
 💻 Full-Stack Developer | 🚀 Tech Enthusiast | 🎨 UI/UX Explorer  
 
