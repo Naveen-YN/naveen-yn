@@ -1,12 +1,5 @@
 # 👋 Hi, I'm Naveen Yanamadala
 
-💻 Full-Stack Developer | 🚀 Tech Enthusiast | 🎨 UI/UX Explorer  
-
----
-
-### 🔥 Currently:
-- 🔭 Building my **portfolio website**
-
 ---
 
 ### 🌐 Portfolio  
